@@ -1,0 +1,113 @@
+//
+// Aside
+//
+
+// General mode(all devices)
+.aside {
+	display: flex;
+	flex-direction: column;
+	background-color: get($aside-config, bg-color);
+	padding: 0;
+
+	// Aside menu
+	.aside-menu {
+		display: flex;		
+		width: 100%;
+
+		.menu {			
+			// Menu item
+			> .menu-item {
+				> .menu-link {
+					margin-top: 0.45rem;
+                	margin-bottom: 0.45rem;					  
+
+					.menu-title {
+						font-size: 1.15rem;
+					}
+				}
+			
+				&.menu-accordion {
+					.menu-link {
+						padding-top: 0.45rem;
+						padding-bottom: 0.45rem;						 
+					}
+
+					&.show,
+					&.showing {
+						> .menu-link {
+							> .menu-icon {
+								.svg-icon {
+									@include menu-link-arrow-rotate(90deg, -90deg);
+								}						
+							}
+						}
+					}
+
+					&.hiding {
+						> .menu-link {
+							> .menu-icon {
+								.svg-icon {
+									@include menu-link-arrow-rotate(0, 0);
+								}						
+							}
+						}
+					}	
+				}			
+			}
+
+			// Link colors
+			.menu-item {
+				@include menu-link-default-state( $title-color: $gray-700, $icon-color: $gray-600, $bullet-color: $gray-400, $arrow-color: $gray-400, $bg-color: transparent );
+				@include menu-link-hover-state( $title-color: $gray-900, $icon-color: null, $bullet-color: null, $arrow-color: null, $bg-color: transparent );
+				@include menu-link-here-state( $title-color: $gray-900, $icon-color: null, $bullet-color: null, $arrow-color: null, $bg-color: transparent );
+				@include menu-link-show-state( $title-color: $gray-900, $icon-color: $gray-900, $bullet-color: $gray-900, $arrow-color: null, $bg-color: transparent );
+				@include menu-link-active-state( $title-color: $gray-900, $icon-color: $gray-900, $bullet-color: $gray-900, $arrow-color: null, $bg-color: transparent );
+
+				&.here > .menu-link,
+				> .menu-link.active {
+					.menu-title {
+						font-weight: $font-weight-bolder;
+					}
+				}
+			}
+		}
+	}
+
+	// Scrollbar
+	.hover-scroll-overlay-y {
+        --scrollbar-space: 0.1rem;        
+        @include scrollbar-color(get($aside-config, scrollbar-hover-color));
+    }
+}
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+	.aside {
+		position: fixed;		
+		z-index: get($aside-config, z-index);
+		overflow: hidden;
+		width: get($aside-config, width);
+		top: 0;
+		left: 0;
+		bottom: 0;
+		
+		// Logo
+		.aside-logo {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+	.aside {
+		display: none;
+
+		// Logo
+		.aside-logo {
+			display: none;
+		}
+	}
+}
