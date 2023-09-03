@@ -61,7 +61,7 @@
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar" id="cancel_thumbnail">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
@@ -274,7 +274,7 @@
             if (document.getElementById('image').files.length > 0) {
                 formData.append('image', document.getElementById('image').files[0]);
             }
-            axios.post('/book', formData).then(function(response) {
+            axios.post('/dashboard/book', formData).then(function(response) {
 
                 console.log(response);
                 const Toast = Swal.mixin({
@@ -293,7 +293,7 @@
                     title: response.data.message
                 })
                 document.getElementById('kt_ecommerce_add_product_form').reset();
-
+                document.getElementById('cancel_thumbnail').click();
 
             }).catch(function(error) {
                 console.log(error);

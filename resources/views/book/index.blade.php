@@ -4,6 +4,16 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
+    <style>
+        .single-line {
+            white-space: nowrap;
+            /* Prevent text from wrapping */
+            overflow: hidden;
+            /* Hide overflowing text */
+            text-overflow: ellipsis;
+            /* Show ellipsis (...) if text overflows the cell */
+        }
+    </style>
 @stop
 
 @section('heading_title')
@@ -69,7 +79,7 @@
                         <th class="min-w-100px">Author name</th>
                         <th class="min-w-70px">Category</th>
                         <th class="min-w-100px">Publish date</th>
-                        <th class="min-w-100px">Price</th>
+                        <th class="min-w-20px">Price</th>
                         <th class="min-w-70px">Actions</th>
                     </tr>
                     <!--end::Table row-->
@@ -90,7 +100,7 @@
                                         {{ $book->id }}
                                     </div>
                                 </td>
-                                <td>
+                                <td class="">
                                     <div class="d-flex align-items-center">
                                         <a href="../../demo15/dist/apps/ecommerce/catalog/edit-product.html"
                                             class="symbol symbol-50px">
@@ -204,7 +214,7 @@
         }
 
         function performDelete(id, element) {
-            axios.delete('/book/' + id)
+            axios.delete('/dashboard/book/' + id)
                 .then(function(response) {
                     console.log(response);
                     Swal.fire({

@@ -14,10 +14,18 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+         $this->authorizeResource(Book::class, 'book');
+     }
+
     public function index()
     {
         $books = Book::with('category')->get();
         return response()->view('book.index', compact('books'));
+        // $categories = Category::select('*')->get();
+        // return response()->view('book.index', compact('categories'));
     }
 
     /**
@@ -36,8 +44,10 @@ class BookController extends Controller
     {
         $book = Book::create($request->getData());
         if ($book) {
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Book added successfully"], Response::HTTP_OK);
         }
+        return response()->json(['message' => "Create failed"], Response::HTTP_BAD_REQUEST);
+
     }
 
     /**
@@ -64,7 +74,8 @@ class BookController extends Controller
     {
         $updated = $book->update($request->getData());
         if ($updated) {
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Book updated successfully"], Response::HTTP_OK);
+
         }
     }
 
@@ -76,9 +87,9 @@ class BookController extends Controller
         $deleted = $book->delete();
         if ($deleted) {
             Storage::disk('public')->delete("$book->image");
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Book deleted successfully"], Response::HTTP_OK);
         }else{
-            return response()->json(['message' => "تعذر الحذف"]);
+            return response()->json(['message' => "Deletion failed"], Response::HTTP_BAD_REQUEST);
         }
     }
 }

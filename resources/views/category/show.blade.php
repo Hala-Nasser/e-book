@@ -201,7 +201,7 @@
     }
 
     function performDelete(id, element) {
-        axios.delete('/category/' + id)
+        axios.delete('/dashboard/category/' + id)
             .then(function(response) {
                 console.log(response);
                 Swal.fire({

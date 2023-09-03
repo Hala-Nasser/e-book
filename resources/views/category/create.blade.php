@@ -63,7 +63,7 @@
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar" id="cancel_thumbnail">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
@@ -193,8 +193,8 @@
                     title: response.data.message
                 })
                 document.getElementById('kt_ecommerce_add_category_form').reset();
-                document.getElementById('background').setAttribute('background-image', "url({{asset('dist/assets/media/svg/files/blank-image.svg')}})");
-                // document.getElementById('img_thumbnail').hidden = true;
+                // document.getElementById('background').setAttribute('background-image', "none");
+                document.getElementById('cancel_thumbnail').click();
 
             }).catch(function(error) {
                 console.log(error);

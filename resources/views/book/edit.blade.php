@@ -178,8 +178,9 @@
                                             <label class="required form-label">Description</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description"
-                                                class="min-h-200px mb-2" style="width: 100%" >{!!$book->description!!}</textarea>
+                                            <textarea id="kt_ecommerce_add_product_description"
+                                                name="kt_ecommerce_add_product_description" class="min-h-200px mb-2"
+                                    style="width: 100%"> {{$book->description}}</textarea>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">Set a description to the product for better
@@ -251,6 +252,8 @@
     <script>
         var hostUrl = "assets/";
     </script>
+
+
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('dist/assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
@@ -279,7 +282,7 @@
             if (document.getElementById('image').files.length > 0) {
                 formData.append('image', document.getElementById('image').files[0]);
             }
-            axios.post('/book/{{ $book->id }}', formData).then(function(response) {
+            axios.post('/dashboard/book/{{ $book->id }}', formData).then(function(response) {
 
                 console.log(response);
                 const Toast = Swal.mixin({
@@ -297,7 +300,7 @@
                     icon: 'success',
                     title: response.data.message
                 })
-                window.location.href = "/book";
+                window.location.href = "/dashboard/book";
 
             }).catch(function(error) {
                 console.log(error);

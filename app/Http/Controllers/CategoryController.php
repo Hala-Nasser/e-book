@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+
+    //بدنا نطبق ال policy علشان يتم تنفيذ البيرمشنز و الرولز
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'category');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,8 +42,10 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->getData());
         if ($category) {
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Category added successfully"], Response::HTTP_OK);
         }
+        return response()->json(['message' => "Create failed"], Response::HTTP_BAD_REQUEST);
+
     }
 
     /**
@@ -63,8 +72,10 @@ class CategoryController extends Controller
     {
         $updated = $category->update($request->getData());
         if ($updated) {
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Category updated successfully"], Response::HTTP_OK);
         }
+        return response()->json(['message' => "Update failed"], Response::HTTP_BAD_REQUEST);
+
     }
 
     /**
@@ -76,9 +87,9 @@ class CategoryController extends Controller
         $deleted = $category->delete();
         if ($deleted) {
             Storage::disk('public')->delete("$category->image");
-            return response()->json(['message' => "تمت العملية بنجاح"], Response::HTTP_OK);
+            return response()->json(['message' => "Category deleted successfully"], Response::HTTP_OK);
         }else{
-            return response()->json(['message' => "تعذر الحذف"]);
+            return response()->json(['message' => "Deletin failed"], Response::HTTP_BAD_REQUEST);
         }
     }
 }

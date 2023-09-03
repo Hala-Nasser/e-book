@@ -7,7 +7,7 @@
     <div class="aside-logo flex-column-auto px-9 mb-9 mb-lg-17 mx-auto" id="kt_aside_logo">
         <!--begin::Logo-->
         <a href="{{ route('home') }}">
-            <img alt="Logo" src="{{ asset('dist/assets/media/logos/logo_aside.png')}}" class="logo"
+            <img alt="Logo" src="{{ asset('dist/assets/media/logos/logo_aside.png') }}" class="logo"
                 style="height: 40px; width:160px;" />
         </a>
         <!--end::Logo-->
@@ -18,14 +18,21 @@
         <!--begin::User-->
         <div class="d-flex align-items-center flex-column">
             <!--begin::Symbol-->
-            <div class="symbol symbol-75px mb-4">
-                <img src="{{ asset('dist/assets/media/avatars/300-1.jpg')}}" alt="" />
-            </div>
+            @if (auth('admin')->user()->image)
+                <div class="symbol symbol-75px mb-4">
+                    <img src="{{ Storage::url(auth('admin')->user()->image) }}" alt="" />
+                </div>
+            @else
+                <div class="symbol symbol-75px mb-4">
+                    <img src="{{ asset('dist/assets/media/person.png') }}" alt="" />
+                </div>
+            @endif
             <!--end::Symbol-->
             <!--begin::Info-->
             <div class="text-center">
                 <!--begin::Username-->
-                <a href="#" class="text-gray-900 text-hover-primary fs-4 fw-boldest">Paul Melone</a>
+                <a href="#"
+                    class="text-gray-900 text-hover-primary fs-4 fw-boldest">{{ auth('admin')->user()->name }}</a>
                 <!--end::Username-->
             </div>
             <!--end::Info-->
@@ -43,58 +50,142 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-rounded fw-bold" id="#kt_aside_menu" data-kt-menu="true">
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{ route('home') }}">
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
-                                            fill="black" />
-                                        <path opacity="0.3"
-                                            d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
-                                            fill="black" />
-                                    </svg>
+                    @can('View-Home')
+                        <div class="menu-item">
+                            <a class="menu-link @if (\Request::url() == URL('home')) active @endif" href="{{ route('home') }}">
+                                <span class="menu-icon">
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black" />
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black" />
+                                        </svg>
+                                    </span>
                                 </span>
-                            </span>
-                            <span class="menu-title" style="font-weight: 600; font-size:1.15rem;">Home</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{route('category.index')}}">
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
-                                            fill="black" />
-                                        <path opacity="0.3"
-                                            d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
-                                            fill="black" />
-                                    </svg>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </div>
+                    @endcan
+
+                    @can('Read-Categories')
+                        <div class="menu-item">
+                            <a class="menu-link @if (\Request::url() == URL('category')) active @endif"
+                                href="{{ route('category.index') }}">
+                                <span class="menu-icon">
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black" />
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black" />
+                                        </svg>
+                                    </span>
                                 </span>
-                            </span>
-                            <span class="menu-title" style="font-weight: 600; font-size:1.15rem;">Categories</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="{{route('book.index')}}">
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none">
-                                        <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
-                                            fill="black" />
-                                        <path opacity="0.3"
-                                            d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
-                                            fill="black" />
-                                    </svg>
+                                <span class="menu-title">Categories</span>
+                            </a>
+                        </div>
+                    @endcan
+
+                    @can('Read-Books')
+                        <div class="menu-item">
+                            <a class="menu-link @if (\Request::url() == URL('book')) active @endif"
+                                href="{{ route('book.index') }}">
+                                <span class="menu-icon">
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black" />
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
                                 </span>
-                                <!--end::Svg Icon-->
+                                <span class="menu-title">Books</span>
+                            </a>
+                        </div>
+                    @endcan
+
+                    @can('Read-Admins')
+                        <div class="menu-item">
+                            <a class="menu-link @if (\Request::url() == URL('admin')) active @endif"
+                                href="{{ route('admin.index') }}">
+                                <span class="menu-icon">
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black" />
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <span class="menu-title">Admins</span>
+                            </a>
+                        </div>
+                    @endcan
+
+                    @canany(['Read-Roles', 'Read-permissions'])
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <span class="menu-link @if (\Request::url() == URL('role') || \Request::url() == URL('permission')) active @endif">
+                                <span class="menu-icon">
+                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr001.svg-->
+                                    <span class="svg-icon svg-icon-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black"></path>
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black"></path>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <span class="menu-title">Roles & Permissions</span>
+                                <span class="menu-arrow"></span>
                             </span>
-                            <span class="menu-title" style="font-weight: 800; font-size:1.15rem;">Books</span>
-                        </a>
-                    </div>
+                            <div class="menu-sub menu-sub-accordion">
+
+                                @can('Read-Roles')
+                                    <div class="menu-item">
+                                        <a class="menu-link @if (\Request::url() == URL('role')) active @endif"
+                                            href="{{ route('role.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Roles</span>
+                                        </a>
+                                    </div>
+                                @endcan
+
+                                @can('Read-Permissions')
+                                    <div class="menu-item">
+                                        <a class="menu-link @if (\Request::url() == URL('permission')) active @endif"
+                                            href="{{ route('permission.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Permissions</span>
+                                        </a>
+                                    </div>
+                                @endcan
+
+                            </div>
+                        </div>
+                    @endcanany
+
+
                 </div>
             </div>
             <!--end::Menu-->
@@ -107,7 +198,7 @@
         <!--begin::User panel-->
         <div class="d-flex flex-stack ms-7">
             <!--begin::Link-->
-            <a href="../../demo15/dist/authentication/flows/basic/sign-in.html"
+            <a href="{{ route('admin.logout') }}"
                 class="btn btn-sm btn-icon btn-active-color-primary btn-icon-gray-600 btn-text-gray-600">
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
                 <span class="svg-icon svg-icon-1 me-2">
@@ -156,7 +247,7 @@
                     </div>
                     <!--begin::Menu item-->
                     <div class="menu-item px-5 my-1">
-                        <a href="../../demo15/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
+                        <a href="{{ route('admin.change-password') }}" class="menu-link px-5">Change Password</a>
                     </div>
                     <!--end::Menu item-->
 
@@ -165,7 +256,7 @@
                     <!--end::Menu separator-->
                     <!--begin::Menu item-->
                     <div class="menu-item px-5">
-                        <a href="../../demo15/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Log
+                        <a href="{{ route('admin.logout') }}" class="menu-link px-5">Log
                             Out</a>
                     </div>
                     <!--end::Menu item-->

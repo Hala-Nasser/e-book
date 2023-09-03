@@ -3,63 +3,76 @@
 namespace App\Policies;
 
 use App\Models\Category;
-use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class CategoryPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the admin can view any models.
      */
-    public function viewAny(User $user): bool
+    use HandlesAuthorization;
+
+    public function viewAny($actor)
+    {
+        return $actor->checkPermissionTo('Read-Categories')
+        ? $this->allow()
+        : $this->deny();
+    }
+
+    /**
+     * Determine whether the admin can view the model.
+     */
+    public function view($actor, Category $category)
+    {
+        return $actor->checkPermissionTo('Read-Category-books')
+        ? $this->allow()
+        : $this->deny();
+    }
+
+    /**
+     * Determine whether the Admin can create models.
+     */
+    public function create($actor)
+    {
+        return $actor->checkPermissionTo('Create-Category')
+        ? $this->allow()
+        : $this->deny();
+    }
+
+    /**
+     * Determine whether the admin can update the model.
+     */
+    public function update($actor, Category $category)
+    {
+        return $actor->checkPermissionTo('Update-Category')
+        ? $this->allow()
+        : $this->deny();
+    }
+
+    /**
+     * Determine whether the admin can delete the model.
+     */
+    public function delete($actor, Category $category)
+    {
+        return $actor->checkPermissionTo('Delete-Category')
+        ? $this->allow()
+        : $this->deny();
+    }
+
+    /**
+     * Determine whether the admin can restore the model.
+     */
+    public function restore($actor, Category $category)
     {
         //
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the admin can permanently delete the model.
      */
-    public function view(User $user, Category $category): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Category $category): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Category $category): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Category $category): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Category $category): bool
+    public function forceDelete($actor, Category $category)
     {
         //
     }

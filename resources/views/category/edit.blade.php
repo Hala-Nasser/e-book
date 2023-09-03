@@ -174,7 +174,7 @@
         if (document.getElementById('image').files.length > 0) {
             formData.append('image', document.getElementById('image').files[0]);
         }
-        axios.post('/category/{{ $category->id }}', formData).then(function(response) {
+        axios.post('/dashboard/category/{{ $category->id }}', formData).then(function(response) {
 
 
             console.log(response);
@@ -193,7 +193,7 @@
                 icon: 'success'
                 , title: response.data.message
             })
-            window.location.href = "/category";
+            window.location.href = "/dashboard/category";
         }).catch(function(error) {
             console.log(error);
             const Toast = Swal.mixin({
