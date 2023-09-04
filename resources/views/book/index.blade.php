@@ -4,16 +4,6 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
-    <style>
-        .single-line {
-            white-space: nowrap;
-            /* Prevent text from wrapping */
-            overflow: hidden;
-            /* Hide overflowing text */
-            text-overflow: ellipsis;
-            /* Show ellipsis (...) if text overflows the cell */
-        }
-    </style>
 @stop
 
 @section('heading_title')
@@ -35,28 +25,10 @@
         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
             <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                transform="rotate(45 17.0365 15.1223)" fill="black" />
-                            <path
-                                d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                    <input type="text" data-kt-ecommerce-product-filter="search"
-                        class="form-control form-control-solid w-250px ps-14" placeholder="Search Book" />
-                </div>
-                <!--end::Search-->
             </div>
             <!--end::Card title-->
             <!--begin::Card toolbar-->
-            <div class="card-toolbar" style="float: right">
+            <div class="card-toolbar">
                 <!--begin::Add customer-->
                 <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
                 <!--end::Add customer-->
@@ -67,7 +39,7 @@
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="data_table">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
@@ -87,86 +59,6 @@
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody class="fw-bold text-gray-600">
-                    @if ($books->isEmpty())
-                        <tr>
-                            <td valign="top" colspan="8" style="text-align: center">There is no books yet</td>
-                        </tr>
-                    @else
-                        @foreach ($books as $book)
-                            <!--begin::Table row-->
-                            <tr>
-                                <td>
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                        {{ $book->id }}
-                                    </div>
-                                </td>
-                                <td class="">
-                                    <div class="d-flex align-items-center">
-                                        <a href="../../demo15/dist/apps/ecommerce/catalog/edit-product.html"
-                                            class="symbol symbol-50px">
-                                            <span class="symbol-label"
-                                                style="background-image:url({{ Storage::url($book->image) }});"></span>
-                                        </a>
-                                        <div class="ms-5">
-                                            <a href="../../demo15/dist/apps/ecommerce/catalog/edit-product.html"
-                                                class="text-gray-800 text-hover-primary fs-5 fw-bolder"
-                                                data-kt-ecommerce-product-filter="product_name">{{ $book->name }}</a>
-                                            <div class="text-muted fs-7 fw-bolder">{{ $book->description }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="pe-0">
-                                    <span class="fw-bolder text-dark">{{ $book->author_name }}</span>
-                                </td>
-                                <td class="pe-0" data-order="21">
-                                    <span class="fw-bolder text-dark">{{ $book->category->name }}</span>
-                                </td>
-                                <td class="pe-0">
-                                    <span class="fw-bolder text-dark">{{ $book->publish_date }}</span>
-                                </td>
-                                <td class="pe-0">
-                                    <span class="fw-bolder text-dark">{{ $book->price }}$</span>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                        <span class="svg-icon svg-icon-5 m-0">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <path
-                                                    d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                    fill="black" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon--></a>
-                                    <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                                        data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="{{ route('book.edit', ['book' => $book->id]) }}"
-                                                class="menu-link px-3">Edit</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <button class="btn menu-link px-3"
-                                                onclick="DeleteBook({{ $book->id }},this)"
-                                                style="font-size: .95rem; color:#7e8299; text-align: left; padding-left:0px">
-                                                Delete
-                                            </button>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu-->
-                                </td>
-                                <!--end::Action=-->
-                            </tr>
-                            <!--end::Table row-->
-                        @endforeach
-                    @endif
-
 
                 </tbody>
                 <!--end::Table body-->
@@ -181,9 +73,8 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <!--end::Page Vendors Javascript-->
+{{-- <script src="{{ asset('dist/assets/plugins/global/plugins.bundle.js') }}"></script> --}}
+
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
@@ -191,6 +82,52 @@
     <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Page Custom Javascript-->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                var table = $('#data_table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('book.index') }}",
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'book',
+                            name: 'book'
+                        },
+                        {
+                            data: 'author_name',
+                            name: 'author_name'
+                        },
+                        {
+                            data: 'category',
+                            name: 'category'
+                        },
+                        {
+                            data: 'publish_date',
+                            name: 'publish_date'
+                        },
+                        {
+                            data: 'price',
+                            name: 'price'
+                        },
+
+                        //   {data: 'image', name: 'image'},
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: true
+                        },
+                    ]
+                });
+            });
+        });
+
+    </script>
 
     <script>
         function DeleteBook(id, element) {

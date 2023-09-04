@@ -7,16 +7,22 @@
     <title>Ebook</title>
     <meta charset="utf-8" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ asset('dist/assets/media/logos/logo_icon.png')}}" />
+    <link rel="shortcut icon" href="{{ asset('dist/assets/media/logos/logo_icon.png') }}" />
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('dist/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('dist/assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
 
     <link rel="stylesheet" href="sweetalert2.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     @yield('css')
 </head>
 <!--end::Head-->
@@ -54,12 +60,14 @@
     @include('partials.scroll_top')
 
     <!--begin::Javascript-->
-    <script src="{{ asset('dist/assets/plugins/global/plugins.bundle.js')}}"></script>
-    <script src="{{ asset('dist/assets/js/scripts.bundle.js')}}"></script>
+    <script src="{{ asset('dist/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('dist/assets/js/scripts.bundle.js') }}"></script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
     @yield('js')
 </body>

@@ -124,10 +124,10 @@
                 pinchZoomX: true
             }));
 
-            // // Add cursor
-            // // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-            // var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
-            // cursor.lineY.set("visible", false);
+            // Add cursor
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+            var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
+            cursor.lineY.set("visible", false);
 
 
             // Create axes

@@ -4,22 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\Book;
-use App\Models\Category;
+use Illuminate\Support\Facades\App;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function index(){
-        $categories_count = Category::count();
-        $books_count = Book::count();
-        $categories = Category::select('*')->get();
-        foreach($categories as $category){
-            $category->books_count = Book::select('*')->where('category_id',$category->id)->get()->count();
-        }
-        // dd($categories);
-        return view('home',compact('categories_count', 'books_count', 'categories'));
+    public static function successResponse(string $message_en = 'Operation Ran Successfully!', string $message_ar = 'تمت العملية بنجاح')
+    {
+        return response()->json([
+            'message' => App::isLocale('en') ? $message_en : $message_ar,
+        ], Response::HTTP_OK);
     }
+
+    public static function errorResponse(string $message_en = 'Something went wrong, Please try again.', string $message_ar = 'فشلت العملية, يرجى المحاولة مرة أخرى')
+    {
+        return response()->json([
+            'message' => App::isLocale('en') ? $message_en : $message_ar,
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
 }
