@@ -45,7 +45,7 @@
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
                             <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url({{ asset('dist/assets/media/svg/files/blank-image.svg')}})">
+                                style="background-image: url({{ asset('dist/assets/media/svg/files/blank-image.svg') }})">
                                 <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-150px h-150px"></div>
                                 <!--end::Preview existing avatar-->
@@ -61,7 +61,8 @@
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar" id="cancel_thumbnail">
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar"
+                                    id="cancel_thumbnail">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
@@ -110,6 +111,19 @@
                             <div class="text-muted fs-7 mb-7">Add book to a category.</div>
                             <!--end::Description-->
                             <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="required form-label">Sub Categories</label>
+                            <!--end::Label-->
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                id="sub_category_id">
+                            </select>
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7 mb-7">Add book to a sub category.</div>
+                            <!--end::Description-->
+                            <!--end::Input group-->
+
                         </div>
                         <!--end::Card body-->
                         <div class="card-body pt-0">
@@ -174,9 +188,8 @@
                                             <label class="required form-label">Description</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea id="kt_ecommerce_add_product_description"
-                                                name="kt_ecommerce_add_product_description" class="min-h-200px mb-2"
-                                    style="width: 100%"></textarea>
+                                            <textarea id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description"
+                                                class="min-h-200px mb-2" style="width: 100%"></textarea>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">Set a description to the product for better
@@ -260,6 +273,42 @@
     <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
+    <script>
+        let category = document.getElementById('category_id').value;
+        let category_id_select = document.getElementById('sub_category_id');
+        axios.get('/sub-categories/' + category).then(function(response) {
+            Swal.showLoading();
+            $('#sub_category_id').empty();
+            for (index in response.data) {
+                console.log(response.data[index].name);
+                let name = response.data[index].name;
+                let id = response.data[index].id;
+                category_id_select.options[category_id_select.options.length] = new Option(name, id);
+            }
+        }).catch(function(error) {
+
+        }).finally(() => {
+            Swal.close();
+        });
+
+        $('#category_id').on('change', function() {
+            let category = document.getElementById('category_id').value;
+            axios.get('/sub-categories/' + category).then(function(response) {
+                Swal.showLoading();
+                $('#sub_category_id').empty();
+                for (index in response.data) {
+                    console.log(response.data[index].name);
+                    let name = response.data[index].name;
+                    let id = response.data[index].id;
+                    category_id_select.options[category_id_select.options.length] = new Option(name, id);
+                }
+            }).catch(function(error) {
+
+            }).finally(() => {
+                Swal.close();
+            });
+        });
+    </script>
 
     <script>
         function performStore() {
@@ -267,7 +316,7 @@
             formData.append('name', document.getElementById('name').value);
             formData.append('description', document.getElementById('kt_ecommerce_add_product_description').value);
             formData.append('author_name', document.getElementById('author_name').value);
-            formData.append('category_id', document.getElementById('category_id').value);
+            formData.append('sub_category_id', document.getElementById('sub_category_id').value);
             formData.append('publish_date', document.getElementById('publish_date').value);
             formData.append('price', document.getElementById('price').value);
 

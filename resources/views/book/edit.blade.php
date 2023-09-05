@@ -102,7 +102,7 @@
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
                                 id="category_id">
                                 @foreach ($categories as $category)
-                                    @if ($category->id == $book->category_id)
+                                    @if ($category->id == $book->subCategory->category_id)
                                         <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
                                     @else
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -114,6 +114,18 @@
                             <div class="text-muted fs-7 mb-7">Add book to a category.</div>
                             <!--end::Description-->
                             <!--end::Input group-->
+
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="required form-label">Sub Categories</label>
+                            <!--end::Label-->
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                id="sub_category_id">
+                            </select>
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7 mb-7">Add book to a sub category.</div>
+                            <!--end::Description-->
+                            <!--end::Input group-->
                         </div>
                         <!--end::Card body-->
                         <div class="card-body pt-0">
@@ -122,7 +134,7 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="number" name="price" min="0.1" step="0.1" class="form-control mb-2"
-                                placeholder="Book price" value="{{$book->price}}" id="price" />
+                                placeholder="Book price" value="{{ $book->price }}" id="price" />
                             <!--end::Input-->
                             <!--begin::Description-->
                             <div class="text-muted fs-7">Set the book price.</div>
@@ -157,7 +169,7 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="book_name" class="form-control mb-2"
-                                                placeholder="Book name" value="{{$book->name}}" id="name" />
+                                                placeholder="Book name" value="{{ $book->name }}" id="name" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -168,7 +180,8 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="author_name" class="form-control mb-2"
-                                                placeholder="Author name" value="{{$book->author_name}}" id="author_name" />
+                                                placeholder="Author name" value="{{ $book->author_name }}"
+                                                id="author_name" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -178,9 +191,7 @@
                                             <label class="required form-label">Description</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea id="kt_ecommerce_add_product_description"
-                                                name="kt_ecommerce_add_product_description" class="min-h-200px mb-2"
-                                    style="width: 100%"> {{$book->description}}</textarea>
+                                                <div id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">{{$book->description}}</div>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">Set a description to the product for better
@@ -212,7 +223,8 @@
                                                     </span>
                                                     <!--end::Svg Icon-->
                                                     <input class="form-control form-control-solid ps-12" name="date"
-                                                        id="publish_date" type="date" value="{{$book->publish_date}}"/>
+                                                        id="publish_date" type="date"
+                                                        value="{{ $book->publish_date }}" />
                                                 </div>
                                             </div>
                                         </div>
@@ -259,7 +271,6 @@
     <script src="{{ asset('dist/assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
@@ -268,13 +279,24 @@
     <!--end::Javascript-->
 
     <script>
-
+        var quill = new Quill('#kt_ecommerce_add_product_description', {
+            modules: {
+                toolbar: [
+                    [{
+                        header: [1, 2, !1]
+                    }],
+                    ["bold", "italic", "underline"],
+                    ["image", "code-block"]
+                ]
+            },
+            theme: "snow"
+        });
         function performUpdate() {
             let formData = new FormData();
             formData.append('name', document.getElementById('name').value);
-            formData.append('description', document.getElementById('kt_ecommerce_add_product_description').value);
+            formData.append('description', quill.getText());
             formData.append('author_name', document.getElementById('author_name').value);
-            formData.append('category_id', document.getElementById('category_id').value);
+            formData.append('sub_category_id', document.getElementById('sub_category_id').value);
             formData.append('publish_date', document.getElementById('publish_date').value);
             formData.append('price', document.getElementById('price').value);
             formData.append('_method', 'PUT');
@@ -321,5 +343,48 @@
                 })
             });
         }
+    </script>
+    <script>
+        let category = document.getElementById('category_id').value;
+        let category_id_select = document.getElementById('sub_category_id');
+        axios.get('/sub-categories/' + category).then(function(response) {
+            Swal.showLoading();
+            $('#sub_category_id').empty();
+            for (index in response.data) {
+                let name = response.data[index].name;
+                let id = response.data[index].id;
+                if (response.data[index].id == {{ $book->sub_category_id }}) {
+                    category_id_select.options[category_id_select.options.length] = new Option(name, id, true,
+                        true);
+                } else {
+                    category_id_select.options[category_id_select.options.length] = new Option(name, id);
+                }
+            }
+        }).catch(function(error) {
+
+        }).finally(() => {
+            Swal.close();
+        });
+
+        $('#category_id').on('change', function() {
+            let category = document.getElementById('category_id').value;
+            axios.get('/sub-categories/' + category).then(function(response) {
+                Swal.showLoading();
+                $('#sub_category_id').empty();
+                for (index in response.data) {
+                    let name = response.data[index].name;
+                    let id = response.data[index].id;
+                    category_id_select.options[category_id_select.options.length] = new Option(name, id);
+                }
+            }).catch(function(error) {
+
+            }).finally(() => {
+                Swal.close();
+            });
+        });
+    </script>
+
+    <script>
+
     </script>
 @stop

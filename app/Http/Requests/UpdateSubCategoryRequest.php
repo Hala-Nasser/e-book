@@ -3,10 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
-class StoreCategoryRequest extends FormRequest
+class UpdateSubCategoryRequest extends FormRequest
 {
-
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     protected $stopOnFirstFailure = true;
 
     public function authorize(): bool
@@ -18,8 +21,9 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:30',
-            'image' => 'required|image',
-            'status' => 'required|in:true,false'
+            'image' => 'nullable|image',
+            'status' => 'required|in:true,false',
+            'category_id' => 'required|integer',
         ];
     }
 
@@ -29,9 +33,10 @@ class StoreCategoryRequest extends FormRequest
         $data['status'] = $data['status'] == 'true';
 
         if ($this->hasFile('image')) {
+            Storage::disk('public')->delete("$this->image");
             $imageName = time() . "" . '.' . $this->file('image')->getClientOriginalExtension();
-            $this->file('image')->storePubliclyAs('Category', $imageName, ['disk' => 'public']);
-            $data['image'] = 'Category/' . $imageName;
+            $this->file('image')->storePubliclyAs('SubCategory', $imageName, ['disk' => 'public']);
+            $data['image'] = 'SubCategory/' . $imageName;
         }
         return $data;
     }

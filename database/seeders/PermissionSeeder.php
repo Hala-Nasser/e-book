@@ -17,7 +17,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Read-Categories', 'guard_name' => 'admin']);
         Permission::create(['name' => 'Update-Category', 'guard_name' => 'admin']);
         Permission::create(['name' => 'Delete-Category', 'guard_name' => 'admin']);
-        Permission::create(['name' => 'Read-Category-books', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Read-Category-Subs', 'guard_name' => 'admin']);
+
+        Permission::create(['name' => 'Create-SubCategory', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Read-SubCategories', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Update-SubCategory', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Delete-SubCategory', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Read-SubCategory-books', 'guard_name' => 'admin']);
 
         Permission::create(['name' => 'Create-Book', 'guard_name' => 'admin']);
         Permission::create(['name' => 'Read-Books', 'guard_name' => 'admin']);

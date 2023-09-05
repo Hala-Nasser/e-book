@@ -26,30 +26,12 @@
         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
             <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                    <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none">
-                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                transform="rotate(45 17.0365 15.1223)" fill="black" />
-                            <path
-                                d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                fill="black" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                    <input type="text" data-kt-ecommerce-product-filter="search"
-                        class="form-control form-control-solid w-250px ps-14" placeholder="Search Book" />
-                </div>
-                <!--end::Search-->
             </div>
             <!--end::Card title-->
             <!--begin::Card toolbar-->
             <div class="card-toolbar" style="float: right">
                 <!--begin::Add customer-->
-                <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
+                <a href="{{ route('sub-category.create') }}" class="btn btn-primary">Add Sub Category</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -58,18 +40,15 @@
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="date_table">
                 <!--begin::Table head-->
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="w-10px pe-2">
-                            #
-                        </th>
-                        <th class="min-w-200px">Book</th>
-                        <th class="min-w-100px">Author name</th>
-                        <th class="min-w-100px">Publish date</th>
-                        <th class="min-w-100px">Price</th>
+                        <th class="min-w-10px">#</th>
+                        <th class="min-w-250px">Sub Category</th>
+                        {{-- <th class="min-w-250px">Category</th> --}}
+                        <th class="min-w-150px">Status</th>
                         <th class="min-w-70px">Actions</th>
                     </tr>
                     <!--end::Table row-->
@@ -77,7 +56,7 @@
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody class="fw-bold text-gray-600">
-                    @if ($category->books->isEmpty())
+                    {{-- @if ($category->books->isEmpty())
                         <tr>
                             <td valign="top" colspan="8" style="text-align: center">There is no books yet</td>
                         </tr>
@@ -152,7 +131,7 @@
                             </tr>
                             <!--end::Table row-->
                         @endforeach
-                    @endif
+                    @endif --}}
 
 
                 </tbody>
@@ -168,9 +147,9 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
+    {{-- <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <!--end::Page Vendors Javascript-->
+    <!--end::Page Vendors Javascript--> --}}
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
@@ -179,11 +158,42 @@
     <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Page Custom Javascript-->
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(function() {
+                var table = $('#date_table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/dashboard/category/{{ $category->id }}",
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'sub-category',
+                            name: 'sub-category'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: true
+                        },
+                    ]
+                });
+            });
+        });
+    </script>
+
     <script>
-        function DeleteCategory(id, element) {
+        function DeleteSubCategory(id, element) {
         Swal.fire({
             title: 'Are you sure?'
-            , text: "This action will delete all books belongs to this category!"
+            , text: "This action will delete all books belongs to this sub category!"
             , icon: 'warning'
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
@@ -201,7 +211,7 @@
     }
 
     function performDelete(id, element) {
-        axios.delete('/dashboard/category/' + id)
+        axios.delete('/dashboard/sub-category/' + id)
             .then(function(response) {
                 console.log(response);
                 Swal.fire({

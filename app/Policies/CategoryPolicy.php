@@ -26,7 +26,7 @@ class CategoryPolicy
      */
     public function view($actor, Category $category)
     {
-        return $actor->checkPermissionTo('Read-Category-books')
+        return $actor->checkPermissionTo('Read-Category-Subs')
         ? $this->allow()
         : $this->deny();
     }

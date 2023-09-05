@@ -8,12 +8,12 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Categories</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Sub Categories</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ route('home') }}" class="text-muted">Home</a>
         </li>
-        <li class="breadcrumb-item text-dark">Categories</li>
+        <li class="breadcrumb-item text-dark">Sub Categories</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -31,7 +31,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar" style="float: right">
                 <!--begin::Add customer-->
-                <a href="{{ route('category.create') }}" class="btn btn-primary">Add Category</a>
+                <a href="{{ route('sub-category.create') }}" class="btn btn-primary">Add Sub Category</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -46,8 +46,9 @@
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="min-w-10px">#</th>
-                        <th class="min-w-250px">Category</th>
-                        <th class="min-w-150px">Category Status</th>
+                        <th class="min-w-200px">Sub Category</th>
+                        <th class="min-w-150px">Category</th>
+                        <th class="min-w-150px">Status</th>
                         <th class="min-w-70px">Actions</th>
                     </tr>
                     <!--end::Table row-->
@@ -84,10 +85,14 @@
                 var table = $('#date_table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ route('category.index') }}",
+                    ajax: "{{ route('sub-category.index') }}",
                     columns: [{
                             data: 'id',
                             name: 'id'
+                        },
+                        {
+                            data: 'subCategory',
+                            name: 'subCategory'
                         },
                         {
                             data: 'category',
@@ -110,49 +115,49 @@
     </script>
 
     <script>
-        function DeleteCategory(id, element) {
-        Swal.fire({
-            title: 'Are you sure?'
-            , text: "This action will delete all sub categories belongs to this category with its books!"
-            , icon: 'warning'
-            , showCancelButton: true
-            , confirmButtonColor: '#3085d6'
-            , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Yes, Delete!'
-            , cancelButtonText: 'Cancel'
-        }).then((result) => {
+        function DeleteSubCategory(id, element) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will delete all books belongs to this sub category!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
 
-            if (result.isConfirmed) {
-                performDelete(id, element)
+                if (result.isConfirmed) {
+                    performDelete(id, element)
 
-            }
-        })
-
-    }
-
-    function performDelete(id, element) {
-        axios.delete('/dashboard/category/' + id)
-            .then(function(response) {
-                console.log(response);
-                Swal.fire({
-                    position: 'center'
-                    , icon: response.data.icon
-                    , title: response.data.message
-                    , showConfirmButton: false
-                    , timer: 1500
-                })
-                element.closest('tr').remove();
+                }
             })
-            .catch(function(error) {
-                console.log(error);
-                Swal.fire({
-                    position: 'center'
-                    , icon: error.response.data.icon
-                    , title: error.response.data.message
-                    , showConfirmButton: false
-                    , timer: 1500
+
+        }
+
+        function performDelete(id, element) {
+            axios.delete('/dashboard/sub-category/' + id)
+                .then(function(response) {
+                    console.log(response);
+                    Swal.fire({
+                        position: 'center',
+                        icon: response.data.icon,
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    element.closest('tr').remove();
                 })
-            });
-    }
+                .catch(function(error) {
+                    console.log(error);
+                    Swal.fire({
+                        position: 'center',
+                        icon: error.response.data.icon,
+                        title: error.response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+        }
     </script>
 @stop

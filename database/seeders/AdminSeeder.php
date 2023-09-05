@@ -26,6 +26,7 @@ class AdminSeeder extends Seeder
         $admin->name = "e-book super admin";
         $admin->email = "hala.n.nofal@gmail.com";
         $admin->password = "Hala123!@#";
+        $admin->active = true;
 
         $result = $admin->save();
         if ($admin) {

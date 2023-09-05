@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class StoreSubCategoryRequest extends FormRequest
 {
-
     protected $stopOnFirstFailure = true;
 
     public function authorize(): bool
@@ -19,7 +18,8 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:30',
             'image' => 'required|image',
-            'status' => 'required|in:true,false'
+            'status' => 'required|in:true,false',
+            'category_id' => 'required|integer',
         ];
     }
 
@@ -30,9 +30,10 @@ class StoreCategoryRequest extends FormRequest
 
         if ($this->hasFile('image')) {
             $imageName = time() . "" . '.' . $this->file('image')->getClientOriginalExtension();
-            $this->file('image')->storePubliclyAs('Category', $imageName, ['disk' => 'public']);
-            $data['image'] = 'Category/' . $imageName;
+            $this->file('image')->storePubliclyAs('SubCategory', $imageName, ['disk' => 'public']);
+            $data['image'] = 'SubCategory/' . $imageName;
         }
         return $data;
     }
 }
+

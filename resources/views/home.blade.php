@@ -21,62 +21,74 @@
 
 @section('content')
 
-<div class="row g-5 g-lg-10" style="margin-bottom: 20px">
-    <div class="col-xl-3" style="height: 200px">
-        <div class="card bg-dark  card-xl-stretch mb-xl-8">
-            <div class="card-body">
-                <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
-                    <i class="fas fa-chart-pie" style="color: #fff ; font-size: 30px"></i>
-                </span>
-                <div class="text-white fw-bold fs-2 mb-2 mt-5">Categories</div>
-                <div class="fw-semibold text-white" style="font-size: 18px;">
-                    {{ $categories_count }}</div>
+    <div class="row g-5 g-lg-10" style="margin-bottom: 20px">
+        <div class="col-xl-3" style="height: 200px">
+            <div class="card bg-dark  card-xl-stretch mb-xl-8">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                        <i class="fas fa-chart-pie" style="color: #fff ; font-size: 30px"></i>
+                    </span>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Categories</div>
+                    <div class="fw-semibold text-white" style="font-size: 18px;">
+                        {{ $categories_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3" style="height: 200px; width:26%">
+            <div class="card bg-dark  card-xl-stretch mb-xl-8">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                        <i class="fas fa-chart-pie" style="color: #fff ; font-size: 30px"></i>
+                    </span>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Sub Categories</div>
+                    <div class="fw-semibold text-white" style="font-size: 18px;">
+                        {{ $sub_categories_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3" style="height: 200px">
+            <div class="card bg-dark  card-xl-stretch mb-xl-8">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
+                        <i class="fas fa-book" style="color: #fff ; font-size: 30px"></i>
+                    </span>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Books</div>
+                    <div class="fw-semibold text-white" style="font-size: 18px;">
+                        {{ $books_count }}</div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3">
-        <div class="card bg-dark  card-xl-stretch mb-xl-8">
-            <div class="card-body">
-                <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
-                    <i class="fas fa-book" style="color: #fff ; font-size: 30px"></i>
-                </span>
-                <div class="text-white fw-bold fs-2 mb-2 mt-5">Books</div>
-                <div class="fw-semibold text-white" style="font-size: 18px;">
-                    {{ $books_count }}</div>
-            </div>
-        </div>
-        </div>
-</div>
 
     <!--begin::Row-->
     <div class="row">
         <!--begin::Col-->
         <div class="col-xl-12">
-          <!--begin::Chart widget 17-->
-          <div class="card card-flush h-xl-100">
-              <!--begin::Header-->
-              <div class="card-header pt-7">
-                  <!--begin::Title-->
-                  <h3 class="card-title align-items-start flex-column">
-                      <span class="card-label fw-bolder text-dark">Books Statistics</span>
-                      {{-- <span class="text-gray-400 pt-2 fw-bold fs-6">Top Selling Countries</span> --}}
-                  </h3>
-                  <!--end::Title-->
-              </div>
-              <!--end::Header-->
-              <!--begin::Body-->
-              <div class="card-body pt-5">
-                  <!--begin::Chart container-->
-                  <div id="chartdiv" class="w-100 h-350px"></div>
-                  <!--end::Chart container-->
-              </div>
-              <!--end::Body-->
-          </div>
-          <!--end::Chart widget 17-->
-      </div>
-      <!--end::Col-->
-  </div>
-  <!--end::Row-->
+            <!--begin::Chart widget 17-->
+            <div class="card card-flush h-xl-100">
+                <!--begin::Header-->
+                <div class="card-header pt-7">
+                    <!--begin::Title-->
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bolder text-dark">Sub Category Statistics</span>
+                        {{-- <span class="text-gray-400 pt-2 fw-bold fs-6">Top Selling Countries</span> --}}
+                    </h3>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body pt-5">
+                    <!--begin::Chart container-->
+                    <div id="chartdiv" class="w-100 h-350px"></div>
+                    <!--end::Chart container-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Chart widget 17-->
+        </div>
+        <!--end::Col-->
+    </div>
+    <!--end::Row-->
 
 
 
@@ -198,7 +210,7 @@
             function myFunction(item) {
                 data.push({
                     category: item.name,
-                    value: item.books_count
+                    value: item.sub_categories_count
                 });
             }
 

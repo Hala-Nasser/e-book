@@ -26,7 +26,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Book::with('category')->get();
+            $data = Book::with('subCategory')->get();
            return Datatables::of($data)
                    ->addIndexColumn()
                    ->addColumn('book', function ($row) {
@@ -43,55 +43,24 @@ class BookController extends Controller
                     </div>
                 </div>';
                    })
-                   ->addColumn('category', function ($row) {
-                    return '<span class="fw-bolder text-dark">'. $row->category->name .'</span>';
+                   ->addColumn('sub-category', function ($row) {
+                    return '<span class="fw-bolder text-dark">'. $row->subCategory->name .'</span>';
+                   })
+                   ->addColumn('price', function ($row) {
+                    return '<span class="fw-bolder text-dark">'. $row->price .' $</span>';
                    })
                    ->addColumn('action', function($row){
-                    //        return '<a class="btn btn-secondary btn-sm" href="with/'.$row->id.'/edit ">
-                    //        <i class="fa fa-edit">
-                    //        </i>
-                    //        تعديل
-                    //    </a>
+                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/'. $row->id .'/edit">
+                           <i class="fa fa-edit">
+                           </i>
+                           Edit
+                       </a>
 
-                    //    <button class="btn btn-danger btn-sm delete" onclick="DeleteWith('.$row->id.',this)">
-                    //        حذف</button>';
-
-                           return '<a href="#" class="btn btn-sm btn-light btn-active-light-primary"
-                           data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                           <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                           <span class="svg-icon svg-icon-5 m-0">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                   viewBox="0 0 24 24" fill="none">
-                                   <path
-                                       d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                       fill="black" />
-                               </svg>
-                           </span>
-                           <!--end::Svg Icon--></a>
-                       <!--begin::Menu-->
-                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-                           data-kt-menu="true">
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                               <a href="dashboard/book/'. $row->id .'/edit"
-                                   class="menu-link px-3">Edit</a>
-                           </div>
-                           <!--end::Menu item-->
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                               <button class="btn menu-link px-3"
-                                   onclick="DeleteBook('. $row->id .',this)"
-                                   style="font-size: .95rem; color:#7e8299; text-align: left; padding-left:0px">
-                                   Delete
-                               </button>
-                           </div>
-                           <!--end::Menu item-->
-                       </div>
-                       <!--end::Menu-->';
-
+                       <button class="btn btn-danger btn-sm delete" onclick="DeleteBook('. $row->id .',this)" style="margin-top:5px;">
+                           Delete</button>';
                    })
 
-                   ->rawColumns(['action', 'book', 'category'])
+                   ->rawColumns(['action', 'book', 'sub-category', 'price'])
                    ->make(true);
        }
 
@@ -113,13 +82,8 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         $saved = Book::create($request->getData());
-        // if ($book) {
-        //     return response()->json(['message' => "Book added successfully"], Response::HTTP_OK);
-        // }
-        // return response()->json(['message' => "Create failed"], Response::HTTP_BAD_REQUEST);
 
         return $saved ? parent::successResponse() : parent::errorResponse();
-        // return $book ? response()->json(['message' => "Book added successfully"], Response::HTTP_OK): response()->json(['message' => "Create failed"], Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -136,6 +100,7 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         $categories = Category::select('*')->get();
+        $book = $book->load('subCategory');
         return view('book.edit', compact('book', 'categories'));
     }
 

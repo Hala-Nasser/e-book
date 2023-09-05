@@ -44,12 +44,10 @@
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="w-10px pe-2">
-                            #
-                        </th>
+                        <th class="w-10px pe-2">#</th>
                         <th class="min-w-200px">Book</th>
                         <th class="min-w-100px">Author name</th>
-                        <th class="min-w-70px">Category</th>
+                        <th class="min-w-70px">Sub Category</th>
                         <th class="min-w-100px">Publish date</th>
                         <th class="min-w-20px">Price</th>
                         <th class="min-w-70px">Actions</th>
@@ -73,7 +71,6 @@
 @stop
 
 @section('js')
-{{-- <script src="{{ asset('dist/assets/plugins/global/plugins.bundle.js') }}"></script> --}}
 
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
@@ -103,8 +100,8 @@
                             name: 'author_name'
                         },
                         {
-                            data: 'category',
-                            name: 'category'
+                            data: 'sub-category',
+                            name: 'sub-category'
                         },
                         {
                             data: 'publish_date',
@@ -115,7 +112,6 @@
                             name: 'price'
                         },
 
-                        //   {data: 'image', name: 'image'},
                         {
                             data: 'action',
                             name: 'action',

@@ -24,18 +24,6 @@ class UpdateCategoryRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'name.required' => 'Please fill book name',
-            'name.min' => 'Book name is too short',
-            'name.max' => 'Book name is too long',
-            'image.image' => 'Please make sure that you upload image',
-            'status.required' => 'Please determine category status',
-            'status.in' => 'Status must be true or false',
-        ];
-    }
-
     public function getData()
     {
         $data = $this->validated();

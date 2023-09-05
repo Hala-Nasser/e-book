@@ -10,13 +10,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Category</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Sub Category</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ route('home') }}" class="text-muted">Home</a>
         </li>
-        <li class="breadcrumb-item text-muted">Categories</li>
-        <li class="breadcrumb-item text-dark">Add Category</li>
+        <li class="breadcrumb-item text-muted">Sub Categories</li>
+        <li class="breadcrumb-item text-dark">Add Sub Category</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -76,7 +76,7 @@
                             </div>
                             <!--end::Image input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the category thumbnail image. Only *.png, *.jpg and *.jpeg
+                            <div class="text-muted fs-7">Set the sub category thumbnail image. Only *.png, *.jpg and *.jpeg
                                 image files are accepted</div>
                             <!--end::Description-->
                         </div>
@@ -101,17 +101,38 @@
                             <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">Category Name</label>
+                                <label class="required form-label">Sub Category Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" name="category_name" class="form-control mb-2"
-                                    placeholder="Category name" value="" id="name" />
+                                    placeholder="Sub Category Name" value="" id="name" />
                                 <!--end::Input-->
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
+                                <div class="text-muted fs-7">A sub category name is required and recommended to be unique.</div>
                                 <!--end::Description-->
                             </div>
                             <!--end::Input group-->
+                             <!--begin::Card body-->
+                        <div class="mb-10 fv-row">
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="required form-label">Categories</label>
+                            <!--end::Label-->
+                            <!--begin::Select2-->
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                id="category_id">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            <!--end::Select2-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7 mb-7">Add category to a sub category.</div>
+                            <!--end::Description-->
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Card body-->
+
                             <!--begin::Input group-->
                             <div>
                                 <!--begin::Label-->
@@ -129,7 +150,7 @@
                     <!--end::General options-->
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{ route('category.index') }}" id="kt_ecommerce_add_product_cancel"
+                        <a href="{{ route('sub-category.index') }}" id="kt_ecommerce_add_product_cancel"
                             class="btn btn-light me-5">Cancel</a>
                         <!--end::Button-->
                         <!--begin::Button-->
@@ -166,15 +187,15 @@
 
     <script>
         function performStore() {
-            console.log(document.getElementById('image').files[0]);
             let formData = new FormData();
             formData.append('name', document.getElementById('name').value);
             formData.append('status', document.getElementById('status').checked);
+            formData.append('category_id', document.getElementById('category_id').value);
 
             if (document.getElementById('image').files.length > 0) {
                 formData.append('image', document.getElementById('image').files[0]);
             }
-            axios.post('/dashboard/category', formData).then(function(response) {
+            axios.post('/dashboard/sub-category', formData).then(function(response) {
 
                 console.log(response);
                 const Toast = Swal.mixin({
@@ -193,7 +214,6 @@
                     title: response.data.message
                 })
                 document.getElementById('kt_ecommerce_add_category_form').reset();
-                // document.getElementById('background').setAttribute('background-image', "none");
                 document.getElementById('cancel_thumbnail').click();
 
             }).catch(function(error) {

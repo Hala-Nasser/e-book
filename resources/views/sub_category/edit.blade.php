@@ -10,13 +10,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Category</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Edit Sub Category</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ route('home') }}" class="text-muted">Home</a>
         </li>
-        <li class="breadcrumb-item text-muted">Categories</li>
-        <li class="breadcrumb-item text-dark">Add Category</li>
+        <li class="breadcrumb-item text-muted">Sub Categories</li>
+        <li class="breadcrumb-item text-dark">Edit Sub Category</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -26,8 +26,8 @@
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Container-->
         <div class="container-fluid" id="kt_content_container">
-            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row"
-                onsubmit="event.preventDefault(); performStore();">
+            <form id="kt_ecommerce_edit_category_form" class="form d-flex flex-column flex-lg-row"
+                onsubmit="event.preventDefault(); performUpdate();">
                 <!--begin::Aside column-->
                 <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                     <!--begin::Thumbnail settings-->
@@ -45,7 +45,7 @@
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
                             <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url({{asset('dist/assets/media/svg/files/blank-image.svg')}})" id="background">
+                                style="background-image: url({{ Storage::url($subCategory->image) }})" id="background">
                                 <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-150px h-150px"></div>
                                 <!--end::Preview existing avatar-->
@@ -56,14 +56,14 @@
                                     <i class="bi bi-pencil-fill fs-7"></i>
                                     <!--end::Icon-->
                                     <!--begin::Inputs-->
-                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" id="image"/>
+                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" id="image" value=""/>
                                     <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar" id="cancel_thumbnail">
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
@@ -76,7 +76,7 @@
                             </div>
                             <!--end::Image input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the category thumbnail image. Only *.png, *.jpg and *.jpeg
+                            <div class="text-muted fs-7">Set the sub category thumbnail image. Only *.png, *.jpg and *.jpeg
                                 image files are accepted</div>
                             <!--end::Description-->
                         </div>
@@ -101,24 +101,48 @@
                             <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">Category Name</label>
+                                <label class="required form-label">Sub Category Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" name="category_name" class="form-control mb-2"
-                                    placeholder="Category name" value="" id="name" />
+                                    placeholder="Category name" value="{{$subCategory->name}}" id="name" />
                                 <!--end::Input-->
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
+                                <div class="text-muted fs-7">A sub category name is required and recommended to be unique.</div>
                                 <!--end::Description-->
                             </div>
                             <!--end::Input group-->
+                        <!--begin::Card body-->
+                        <div class="mb-10 fv-row">
+                            <!--begin::Input group-->
+                            <!--begin::Label-->
+                            <label class="required form-label">Categories</label>
+                            <!--end::Label-->
+                            <!--begin::Select2-->
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                id="category_id">
+                                @foreach ($categories as $category)
+                                    @if ($category->id == $subCategory->category_id)
+                                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                    @else
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            <!--end::Select2-->
+                            <!--begin::Description-->
+                            <div class="text-muted fs-7 mb-7">Add book to a category.</div>
+                            <!--end::Description-->
+                            <!--end::Input group-->
+                        </div>
+                        <!--end::Card body-->
                             <!--begin::Input group-->
                             <div>
                                 <!--begin::Label-->
                                 <label class="required form-label">Status</label>
                                 <!--end::Label-->
                                 <label class="switch" style="margin-left: 10px">
-                                    <input type="checkbox" id="status">
+                                    <input type="checkbox" id="status" @checked($subCategory->status )>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
@@ -129,7 +153,7 @@
                     <!--end::General options-->
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{ route('category.index') }}" id="kt_ecommerce_add_product_cancel"
+                        <a href="{{ route('sub-category.index') }}" id="kt_ecommerce_add_product_cancel"
                             class="btn btn-light me-5">Cancel</a>
                         <!--end::Button-->
                         <!--begin::Button-->
@@ -165,55 +189,54 @@
     <!--end::Javascript-->
 
     <script>
-        function performStore() {
-            console.log(document.getElementById('image').files[0]);
-            let formData = new FormData();
-            formData.append('name', document.getElementById('name').value);
-            formData.append('status', document.getElementById('status').checked);
+         function performUpdate() {
+        let formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('category_id', document.getElementById('category_id').value);
+        formData.append('status', document.getElementById('status').checked);
+        formData.append('_method', 'PUT');
 
-            if (document.getElementById('image').files.length > 0) {
-                formData.append('image', document.getElementById('image').files[0]);
-            }
-            axios.post('/dashboard/category', formData).then(function(response) {
-
-                console.log(response);
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-                Toast.fire({
-                    icon: 'success',
-                    title: response.data.message
-                })
-                document.getElementById('kt_ecommerce_add_category_form').reset();
-                // document.getElementById('background').setAttribute('background-image', "none");
-                document.getElementById('cancel_thumbnail').click();
-
-            }).catch(function(error) {
-                console.log(error);
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-                Toast.fire({
-                    icon: 'error',
-                    title: error.response.data.message
-                })
-            });
+        if (document.getElementById('image').files.length > 0) {
+            formData.append('image', document.getElementById('image').files[0]);
         }
+        axios.post('/dashboard/sub-category/{{ $subCategory->id }}', formData).then(function(response) {
+
+
+            console.log(response);
+            const Toast = Swal.mixin({
+                toast: true
+                , position: 'top-end'
+                , showConfirmButton: false
+                , timer: 1500
+                , timerProgressBar: true
+                , didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'success'
+                , title: response.data.message
+            })
+            window.location.href = "/dashboard/sub-category";
+        }).catch(function(error) {
+            console.log(error);
+            const Toast = Swal.mixin({
+                toast: true
+                , position: 'top-end'
+                , showConfirmButton: false
+                , timer: 1500
+                , timerProgressBar: true
+                , didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'error'
+                , title: error.response.data.message
+            })
+        });
+    }
     </script>
 @stop
