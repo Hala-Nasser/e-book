@@ -4,7 +4,6 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
-
 @stop
 
 @section('heading_title')
@@ -102,6 +101,8 @@
                             <!--begin::Select2-->
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
                                 id="category_id">
+                                {{-- <option value="-1">Choose Category</option> --}}
+
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -138,6 +139,7 @@
                             <div class="text-muted fs-7">Set the book price.</div>
                             <!--end::Description-->
                         </div>
+
                     </div>
                     <!--end::Category & tags-->
                 </div>
@@ -188,8 +190,9 @@
                                             <label class="required form-label">Description</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description"
-                                                class="min-h-200px mb-2" style="width: 100%"></textarea>
+                                            <div id="kt_ecommerce_add_product_description"
+                                                name="kt_ecommerce_add_product_description" class="min-h-200px mb-2"
+                                                style="width: 100%"></div>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">Set a description to the product for better
@@ -230,10 +233,50 @@
                                     <!--end::Card header-->
                                 </div>
                                 <!--end::General options-->
+
+                                <!--begin::Media-->
+                                <div class="card card-flush py-4">
+                                    <!--begin::Card header-->
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>Media</h2>
+                                        </div>
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-2">
+                                            <!--begin::Dropzone-->
+                                            <div class="dropzone" id="dropzone">
+                                                <!--begin::Message-->
+                                                <div class="dz-message needsclick">
+                                                    <!--begin::Icon-->
+                                                    <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                                    <!--end::Icon-->
+                                                    <!--begin::Info-->
+                                                    <div class="ms-4">
+                                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or
+                                                            click to upload.</h3>
+                                                        <span class="fs-7 fw-bold text-gray-400">Upload up to 5
+                                                            files</span>
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+                                            <!--end::Dropzone-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7">Set the book media gallery.</div>
+                                        <!--end::Description-->
+                                    </div>
+                                    <!--end::Card header-->
+                                </div>
+
                             </div>
                         </div>
                         <!--end::Tab pane-->
-
                     </div>
                     <!--end::Tab content-->
                     <div class="d-flex justify-content-end">
@@ -255,6 +298,8 @@
         <!--end::Container-->
     </div>
     <!--end::Content-->
+
+
 @stop
 @section('js')
     <!--begin::Javascript-->
@@ -266,13 +311,28 @@
     <script src="{{ asset('dist/assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
+    {{-- <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script> --}}
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
     <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
+    <script>
+        var quill = new Quill('#kt_ecommerce_add_product_description', {
+            modules: {
+                toolbar: [
+                    [{
+                        header: [1, 2, !1]
+                    }],
+                    ["bold", "italic", "underline"],
+                    ["image", "code-block"]
+                ]
+            },
+            theme: "snow"
+        });
+    </script>
+
     <script>
         let category = document.getElementById('category_id').value;
         let category_id_select = document.getElementById('sub_category_id');
@@ -311,10 +371,35 @@
     </script>
 
     <script>
+        // var images=[];
+        let myDropzone = new Dropzone("#dropzone", {
+            autoProcessQueue: false,
+            url: "/]https://keenthemes.com/scripts/void.php",
+            paramName: "file",
+            maxFiles: 5,
+            maxFilesize: 5,
+            acceptedFiles: ".jpeg, .jpg, .png",
+            addRemoveLinks: true,
+            accept: function(e, t) {
+                "wow.jpg" == e.name ? t("Naha, you don't.") : t();
+            }
+        });
+
+        function Images() {
+            return myDropzone.getAcceptedFiles();
+        }
+
+
         function performStore() {
+
             let formData = new FormData();
+
+            Images().forEach((e) => {
+                formData.append('images[]', e);
+            });
+
             formData.append('name', document.getElementById('name').value);
-            formData.append('description', document.getElementById('kt_ecommerce_add_product_description').value);
+            formData.append('description', quill.getText());
             formData.append('author_name', document.getElementById('author_name').value);
             formData.append('sub_category_id', document.getElementById('sub_category_id').value);
             formData.append('publish_date', document.getElementById('publish_date').value);
@@ -341,8 +426,7 @@
                     icon: 'success',
                     title: response.data.message
                 })
-                document.getElementById('kt_ecommerce_add_product_form').reset();
-                document.getElementById('cancel_thumbnail').click();
+                window.location.href = "/dashboard/book";
 
             }).catch(function(error) {
                 console.log(error);

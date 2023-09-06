@@ -9,13 +9,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Book</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Edit Book</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
             <a href="{{ route('home') }}" class="text-muted">Home</a>
         </li>
         <li class="breadcrumb-item text-muted">Books</li>
-        <li class="breadcrumb-item text-dark">Add Book</li>
+        <li class="breadcrumb-item text-dark">Edit Book</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -191,7 +191,9 @@
                                             <label class="required form-label">Description</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                                <div id="kt_ecommerce_add_product_description" name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">{{$book->description}}</div>
+                                            <div id="kt_ecommerce_add_product_description"
+                                                name="kt_ecommerce_add_product_description" class="min-h-200px mb-2">
+                                                {{ $book->description }}</div>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">Set a description to the product for better
@@ -233,6 +235,46 @@
                                     <!--end::Card header-->
                                 </div>
                                 <!--end::General options-->
+
+                                <!--begin::Media-->
+                                <div class="card card-flush py-4">
+                                    <!--begin::Card header-->
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>Media</h2>
+                                        </div>
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-2">
+                                            <!--begin::Dropzone-->
+                                            <div class="dropzone" id="dropzone">
+                                                <!--begin::Message-->
+                                                <div class="dz-message needsclick">
+                                                    <!--begin::Icon-->
+                                                    <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                                    <!--end::Icon-->
+                                                    <!--begin::Info-->
+                                                    <div class="ms-4">
+                                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or
+                                                            click to upload.</h3>
+                                                        <span class="fs-7 fw-bold text-gray-400">Upload up to 5
+                                                            files</span>
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+                                            <!--end::Dropzone-->
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7">Set the book media gallery.</div>
+                                        <!--end::Description-->
+                                    </div>
+                                    <!--end::Card header-->
+                                </div>
                             </div>
                         </div>
                         <!--end::Tab pane-->
@@ -254,6 +296,36 @@
                 <!--end::Main column-->
             </form>
             <!--end::Form-->
+            <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+            <div class="card card-flush py-4">
+                <div class="card-body pt-0">
+                    <!--begin::Label-->
+                    <label class="required form-label">Current Media</label>
+                    <!--end::Label-->
+                    <table>
+                        @forelse ($book->media as $media)
+                            <tr>
+                                <td class="min-w-70px">
+                                    <a href="" class="symbol symbol-50px">
+                                        <span class="symbol-label"
+                                            style="background-image:url({{ Storage::url($media->image) }});"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn" onclick="DeleteMedia({{ $media->id }},this);"
+                                        style="background-color: red; width: 20px; height: 30px; align-items: center; display: flex; justify-content: center;">
+                                        <i class="fa fa-trash" aria-hidden="true" style="color: white"></i>
+                                    </button>
+                                </td>
+                                <!--end::permission=-->
+                            </tr>
+                        @empty
+                            <p>There is no media</p>
+                        @endforelse
+                    </table>
+                </div>
+            </div>
+            </div>
         </div>
         <!--end::Container-->
     </div>
@@ -291,8 +363,30 @@
             },
             theme: "snow"
         });
+
+        let myDropzone = new Dropzone("#dropzone", {
+            autoProcessQueue: false,
+            url: "/]https://keenthemes.com/scripts/void.php",
+            paramName: "file",
+            maxFiles: 5,
+            maxFilesize: 5,
+            acceptedFiles: ".jpeg, .jpg, .png",
+            addRemoveLinks: true,
+            accept: function(e, t) {
+                "wow.jpg" == e.name ? t("Naha, you don't.") : t();
+            }
+        });
+
+        function Images() {
+            return myDropzone.getAcceptedFiles();
+        }
+
         function performUpdate() {
             let formData = new FormData();
+            Images().forEach((e) => {
+                formData.append('images[]', e);
+            });
+
             formData.append('name', document.getElementById('name').value);
             formData.append('description', quill.getText());
             formData.append('author_name', document.getElementById('author_name').value);
@@ -344,6 +438,55 @@
             });
         }
     </script>
+
+    <script>
+
+        function performDelete(id, element) {
+            axios.delete('/dashboard/media-book/' + id)
+                .then(function(response) {
+                    console.log(response);
+                    Swal.fire({
+                        position: 'center',
+                        icon: response.data.icon,
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    element.closest('tr').remove();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    Swal.fire({
+                        position: 'center',
+                        icon: error.response.data.icon,
+                        title: error.response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+        }
+
+        function DeleteMedia(id, element) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will delete the current image of this book!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+
+                console.log(id);
+                if (result.isConfirmed) {
+                    performDelete(id, element)
+
+                }
+            })
+
+        }
+    </script>
     <script>
         let category = document.getElementById('category_id').value;
         let category_id_select = document.getElementById('sub_category_id');
@@ -384,7 +527,5 @@
         });
     </script>
 
-    <script>
-
-    </script>
+    <script></script>
 @stop

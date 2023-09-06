@@ -69,3 +69,4 @@ Route::middleware(['auth:admin', 'verified'])->prefix('dashboard/')->group( func
 });
 
 Route::get('sub-categories/{category}', [CategoryController::class, 'subCategories']);
+Route::delete('dashboard/media-book/{media_book}', [BookController::class, 'deleteMedia']);
