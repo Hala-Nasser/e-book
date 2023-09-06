@@ -101,7 +101,7 @@
                             <!--begin::Select2-->
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
                                 id="category_id">
-                                {{-- <option value="-1">Choose Category</option> --}}
+                                <option value="-1">Choose Category</option>
 
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -336,42 +336,33 @@
     <script>
         let category = document.getElementById('category_id').value;
         let category_id_select = document.getElementById('sub_category_id');
-        axios.get('/sub-categories/' + category).then(function(response) {
-            Swal.showLoading();
-            $('#sub_category_id').empty();
-            for (index in response.data) {
-                console.log(response.data[index].name);
-                let name = response.data[index].name;
-                let id = response.data[index].id;
-                category_id_select.options[category_id_select.options.length] = new Option(name, id);
-            }
-        }).catch(function(error) {
-
-        }).finally(() => {
-            Swal.close();
-        });
 
         $('#category_id').on('change', function() {
             let category = document.getElementById('category_id').value;
-            axios.get('/sub-categories/' + category).then(function(response) {
-                Swal.showLoading();
-                $('#sub_category_id').empty();
-                for (index in response.data) {
-                    console.log(response.data[index].name);
-                    let name = response.data[index].name;
-                    let id = response.data[index].id;
-                    category_id_select.options[category_id_select.options.length] = new Option(name, id);
-                }
-            }).catch(function(error) {
+            if (document.getElementById('category_id').value != -1) {
 
-            }).finally(() => {
-                Swal.close();
-            });
+                axios.get('/sub-categories/' + category).then(function(response) {
+                    Swal.showLoading();
+                    $('#sub_category_id').empty();
+                    for (index in response.data) {
+                        console.log(response.data[index].name);
+                        let name = response.data[index].name;
+                        let id = response.data[index].id;
+                        category_id_select.options[category_id_select.options.length] = new Option(name,
+                        id);
+                    }
+                }).catch(function(error) {
+
+                }).finally(() => {
+                    Swal.close();
+                });
+            } else {
+                $('#sub_category_id').empty();
+            }
         });
     </script>
 
     <script>
-        // var images=[];
         let myDropzone = new Dropzone("#dropzone", {
             autoProcessQueue: false,
             url: "/]https://keenthemes.com/scripts/void.php",
