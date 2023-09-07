@@ -14,10 +14,10 @@ class CategoryController extends Controller
 {
 
     //بدنا نطبق ال policy علشان يتم تنفيذ البيرمشنز و الرولز
-    public function __construct()
-    {
-        $this->authorizeResource(Category::class, 'category');
-    }
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Category::class);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -30,13 +30,13 @@ class CategoryController extends Controller
                 ->addIndexColumn()
                 ->addColumn('category', function ($row) {
                     return '<div class="d-flex align-items-center">
-                    <a href="/dashboard/category/' . $row->id . '"
+                    <a href="/dashboard/category/' . $row->slug . '"
                         class="symbol symbol-50px">
                         <span class="symbol-label"
                             style="background-image:url( ' . Storage::url($row->image)  . ');"></span>
                     </a>
                     <div class="ms-5">
-                        <a href="/dashboard/category/' . $row->id . '"
+                        <a href="/dashboard/category/' . $row->slug . '"
                             class="text-gray-800 text-hover-primary fs-5 fw-bolder">' . $row->name . '</a>
                     </div>
                 </div>';
@@ -45,7 +45,7 @@ class CategoryController extends Controller
                     return $row->getIsActiveAttribute();
                 })
                 ->addColumn('action', function ($row) {
-                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/category/' . $row->id . '/edit">
+                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/category/' . $row->slug . '/edit">
                            <i class="fa fa-edit">
                            </i>
                            Edit
@@ -81,22 +81,25 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Category $category)
+    // public function show(Request $request, Category $category)
+    public function show(Request $request, $slug)
+
     {
+        $category = Category::select('*')->where('slug',$slug)->first();
         if ($request->ajax()) {
-            $category = $category->load('subCategories');
-            $data = $category->subCategories;
+            $category_with_sub = $category->load('subCategories');
+            $data = $category_with_sub->subCategories;
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('sub-category', function ($row) {
                     return '<div class="d-flex align-items-center">
-                <a href=""
+                <a href="/dashboard/sub-category/' . $row->slug . '"
                     class="symbol symbol-50px">
                     <span class="symbol-label"
                         style="background-image:url( ' . Storage::url($row->image)  . ');"></span>
                 </a>
                 <div class="ms-5">
-                    <a href=""
+                    <a href="/dashboard/sub-category/' . $row->slug . '"
                         class="text-gray-800 text-hover-primary fs-5 fw-bolder">' . $row->name . '</a>
                 </div>
             </div>';
@@ -124,8 +127,9 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($slug)
     {
+        $category = Category::select('*')->where('slug',$slug)->first();
         return view('category.edit', compact('category'));
     }
 

@@ -19,10 +19,10 @@ class BookController extends Controller
      * Display a listing of the resource.
      */
 
-    public function __construct()
-    {
-        $this->authorizeResource(Book::class, 'book');
-    }
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Book::class, 'book');
+    // }
 
     public function index(Request $request)
     {
@@ -51,7 +51,7 @@ class BookController extends Controller
                     return '<span class="fw-bolder text-dark">' . $row->price . ' $</span>';
                 })
                 ->addColumn('action', function ($row) {
-                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/' . $row->id . '/edit">
+                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/' . $row->slug . '/edit">
                            <i class="fa fa-edit">
                            </i>
                            Edit
@@ -111,8 +111,11 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
+    // public function edit(Book $book)
+    public function edit($slug)
+
     {
+        $book = Book::select('*')->where('slug',$slug)->first();
         $categories = Category::select('*')->get();
         $book = $book->load('subCategory')->load('media');
         return view('book.edit', compact('book', 'categories'));

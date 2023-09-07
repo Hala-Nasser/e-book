@@ -25,6 +25,9 @@ class CategoryPolicy
      * Determine whether the admin can view the model.
      */
     public function view($actor, Category $category)
+
+    // public function view($actor, $slug)
+
     {
         return $actor->checkPermissionTo('Read-Category-Subs')
         ? $this->allow()

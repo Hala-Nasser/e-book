@@ -90,7 +90,7 @@
                 var table = $('#data_table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "/dashboard/sub-category/{{ $subCategory->id }}",
+                    ajax: "/dashboard/sub-category/{{ $subCategory->slug }}",
                     columns: [{
                             data: 'id',
                             name: 'id'

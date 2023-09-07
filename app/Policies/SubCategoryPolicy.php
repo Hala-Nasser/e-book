@@ -26,6 +26,8 @@ class SubCategoryPolicy
      * Determine whether the user can view the model.
      */
     public function view($actor, SubCategory $subCategory)
+    // public function view($actor, $slug)
+
     {
          return $actor->checkPermissionTo('Read-SubCategory-books')
         ? $this->allow()

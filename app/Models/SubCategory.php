@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SubCategory extends Model
 {
     use HasFactory;
+    use Sluggable;
 
     protected $fillable = [
         'category_id',
@@ -35,5 +37,15 @@ class SubCategory extends Model
             // return "Inactive";
             return '<div class="badge badge-light-primary" style="font-size:1.15rem">Inactive</div>';
         }
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' =>
+            [
+                'source' => 'name'
+            ]
+        ];
     }
 }

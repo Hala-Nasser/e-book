@@ -164,7 +164,7 @@
                 var table = $('#date_table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "/dashboard/category/{{ $category->id }}",
+                    ajax: "/dashboard/category/{{ $category->slug }}",
                     columns: [{
                             data: 'id',
                             name: 'id'

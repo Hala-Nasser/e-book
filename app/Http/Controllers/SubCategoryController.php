@@ -16,10 +16,10 @@ class SubCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        $this->authorizeResource(SubCategory::class);
-    }
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(SubCategory::class);
+    // }
 
     public function index(Request $request)
     {
@@ -29,13 +29,13 @@ class SubCategoryController extends Controller
                    ->addIndexColumn()
                    ->addColumn('subCategory', function ($row) {
                     return '<div class="d-flex align-items-center">
-                    <a href="/dashboard/sub-category/' . $row->id . '"
+                    <a href="/dashboard/sub-category/' . $row->slug . '"
                         class="symbol symbol-50px">
                         <span class="symbol-label"
                             style="background-image:url( ' . Storage::url($row->image)  .');"></span>
                     </a>
                     <div class="ms-5">
-                        <a href="/dashboard/sub-category/' . $row->id . '"
+                        <a href="/dashboard/sub-category/' . $row->slug . '"
                             class="text-gray-800 text-hover-primary fs-5 fw-bolder">' .$row->name . '</a>
                     </div>
                 </div>';
@@ -48,7 +48,7 @@ class SubCategoryController extends Controller
 
                    })
                    ->addColumn('action', function($row){
-                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/'. $row->id .'/edit">
+                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/'. $row->slug .'/edit">
                            <i class="fa fa-edit">
                            </i>
                            Edit
@@ -85,11 +85,15 @@ class SubCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, SubCategory $subCategory)
+    // public function show(Request $request, SubCategory $subCategory)
+    public function show(Request $request, $slug)
+
     {
+        $subCategory = SubCategory::select('*')->where('slug',$slug)->first();
+
         if ($request->ajax()) {
-            $sub_category = $subCategory->load('books');
-            $data = $sub_category->books;
+            $sub_category_with_books = $subCategory->load('books');
+            $data = $sub_category_with_books->books;
             return Datatables::of($data)
                    ->addIndexColumn()
                    ->addColumn('book', function ($row) {
@@ -113,7 +117,7 @@ class SubCategoryController extends Controller
                     return '<span class="fw-bolder text-dark">'. $row->price .' $</span>';
                    })
                    ->addColumn('action', function($row){
-                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/'. $row->id .'/edit">
+                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/'. $row->slug .'/edit">
                            <i class="fa fa-edit">
                            </i>
                            Edit
@@ -133,9 +137,12 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SubCategory $subCategory)
+    // public function edit(SubCategory $subCategory)
+    public function edit($slug)
+
     {
         $categories = Category::select('*')->get();
+        $subCategory = SubCategory::select('*')->where('slug',$slug)->first();
         return view('sub_category.edit', compact('subCategory', 'categories'));
     }
 
