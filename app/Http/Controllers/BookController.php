@@ -82,23 +82,21 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        // dd($request->all());
         $saved = Book::create($request->getData());
-        // dd($saved->id);
         if ($saved) {
             if ($request['images']) {
+                $images = [];
                 foreach ($request['images'] as $image) {
-                    error_log($image);
-                    $imageName = time() . "" . '.' . $image->getClientOriginalExtension();
+                    $imageName = time() . "" . random_int(1, 999999). '.' . $image->getClientOriginalExtension();
                     $image->storePubliclyAs('Book', $imageName, ['disk' => 'public']);
                     $media = new MediaBook();
                     $media->book_id = $saved->id;
                     $media->image = 'Book/' . $imageName;
-                    $media->save();
-                }
+                    $images[] = $media;
+                 }
+                $saved->media()->saveMany($images);
             }
         }
-
         return $saved ? parent::successResponse() : parent::errorResponse();
     }
 
@@ -129,7 +127,7 @@ class BookController extends Controller
         if ($updated) {
             if ($request['images']) {
                 foreach ($request['images'] as $image) {
-                    $imageName = time() . "" . '.' . $image->getClientOriginalExtension();
+                    $imageName = time() . "" . random_int(1, 999999). '.' . $image->getClientOriginalExtension();
                     $image->storePubliclyAs('Book', $imageName, ['disk' => 'public']);
                     $media = new MediaBook();
                     $media->book_id = $book->id;

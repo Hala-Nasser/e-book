@@ -10,6 +10,18 @@
             @yield('heading_title')
         </div>
         <!--end::Page title=-->
+        <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+
+                    <a rel="alternate" hreflang="{{ $localeCode }}"
+                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        {{ strtoupper($localeCode) }}
+                    </a>
+                    @endforeach
+
+                </li>
+        </ul>
     </div>
     <!--end::Container-->
 </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {

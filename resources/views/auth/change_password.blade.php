@@ -100,7 +100,7 @@
                 formData.append('new_password', document.getElementById('new_password').value);
                 formData.append('confirm_new_password', document.getElementById('confirm_new_password').value);
 
-                axios.post('/change-password', formData).then(function(response) {
+                axios.post('/dashboard/change-password', formData).then(function(response) {
 
                     console.log(response);
                     const Toast = Swal.mixin({
