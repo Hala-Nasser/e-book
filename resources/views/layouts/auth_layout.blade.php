@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+@if(LaravelLocalization::getCurrentLocale() == "ar")
+<html lang="ar" dir="rtl">
+@else
+<html>
+@endif
+
+<html>
 <!--begin::Head-->
 
 <head>
@@ -24,10 +30,30 @@
 <!--begin::Body-->
 
 <body id="kt_body" class="bg-body">
+    <div id="kt_header" class="header" style="margin-top: 10px;">
+        <!--begin::Container-->
+        <div class="container-fluid d-flex align-items-center flex-wrap justify-content-between" id="kt_header_container">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                            @if ($localeCode == LaravelLocalization::getCurrentLocale()) ?
+                style="color: #181c32;"
+                @else
+                style="color: #858ba9c4;" @endif>
+                            {{ strtoupper($localeCode) }}
+                        </a>
+                    @endforeach
+
+                </li>
+            </ul>
+        </div>
+    </div>
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Authentication - Sign-in -->
+        <!--begin::Authentication-->
         <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
             style="background-image: url({{ asset('dist/assets/media/illustrations/dozzy-1/14.png') }})">
             <!--begin::Content-->
@@ -40,19 +66,9 @@
                 @yield('content')
             </div>
             <!--end::Content-->
-            {{-- <!--begin::Footer-->
-				<div class="d-flex flex-center flex-column-auto p-10">
-					<!--begin::Links-->
-					<div class="d-flex align-items-center fw-bold fs-6">
-						<a href="https://keenthemes.com" class="text-muted text-hover-primary px-2">About</a>
-						<a href="mailto:support@keenthemes.com" class="text-muted text-hover-primary px-2">Contact</a>
-						<a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2">Contact Us</a>
-					</div>
-					<!--end::Links-->
-				</div>
-				<!--end::Footer--> --}}
+
         </div>
-        <!--end::Authentication - Sign-in-->
+        <!--end::Authentication -->
     </div>
     <!--end::Root-->
     <!--end::Main-->
@@ -65,9 +81,9 @@
     <script src="{{ asset('dist/assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
 
-        <!--axios and swwetalert-->
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--axios and swwetalert-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('js')
 </body>
 <!--end::Body-->

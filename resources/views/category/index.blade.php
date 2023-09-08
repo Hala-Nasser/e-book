@@ -8,12 +8,12 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Categories</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('general.categories')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-dark">Categories</li>
+        <li class="breadcrumb-item text-dark">{{trans('general.categories')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -31,7 +31,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar" style="float: right">
                 <!--begin::Add customer-->
-                <a href="{{ route('category.create') }}" class="btn btn-primary">Add Category</a>
+                <a href="{{ route('category.create') }}" class="btn btn-primary">{{trans('category_index.add_category')}}</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -46,9 +46,9 @@
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="min-w-10px">#</th>
-                        <th class="min-w-250px">Category</th>
-                        <th class="min-w-150px">Category Status</th>
-                        <th class="min-w-70px">Actions</th>
+                        <th class="min-w-250px">{{trans('category_index.category')}}</th>
+                        <th class="min-w-150px">{{trans('category_index.category_status')}}</th>
+                        <th class="min-w-70px">{{trans('general.actions')}}</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>

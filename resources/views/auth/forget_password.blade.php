@@ -11,17 +11,18 @@
             <!--begin::Heading-->
             <div class="text-center mb-10">
                 <!--begin::Title-->
-                <h1 class="text-dark mb-3">Forgot Password ?</h1>
+                <h1 class="text-dark mb-3">{{ trans('forget_password.title') }}</h1>
                 <!--end::Title-->
                 <!--begin::Link-->
-                <div class="text-gray-400 fw-bold fs-4">Enter your email to reset your password.</div>
+                <div class="text-gray-400 fw-bold fs-4">{{ trans('forget_password.enter_email') }}</div>
                 <!--end::Link-->
             </div>
             <!--begin::Heading-->
             <!--begin::Input group-->
             <div class="fv-row mb-10">
-                <label class="form-label fw-bolder text-gray-900 fs-6">Email</label>
-                <input class="form-control form-control-solid" type="email" placeholder="" name="email" autocomplete="off" id="email"/>
+                <label class="form-label fw-bolder text-gray-900 fs-6">{{ trans('forget_password.email') }}</label>
+                <input class="form-control form-control-solid" type="email" placeholder="" name="email" autocomplete="off"
+                    id="email" />
             </div>
             <!--end::Input group-->
             <!--begin::Actions-->
@@ -31,8 +32,10 @@
                     <span class="indicator-progress">Please wait...
                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                 </button> --}}
-                <button type="button" onclick="sendResetEmail();" class="btn btn-lg btn-primary fw-bolder me-4">Submit</button>
-                <a href="{{route('dashboard.login')}}" class="btn btn-lg btn-light-primary fw-bolder">Cancel</a>
+                <button type="button" onclick="sendResetEmail();"
+                    class="btn btn-lg btn-primary fw-bolder me-4">{{ trans('forget_password.submit') }}</button>
+                <a href="{{ route('dashboard.login') }}"
+                    class="btn btn-lg btn-light-primary fw-bolder">{{ trans('general.cancel') }}</a>
             </div>
             <!--end::Actions-->
         </form>
@@ -48,7 +51,7 @@
             axios.post('/forget-password', {
                 email: document.getElementById('email').value,
             }).then(function(response) {
-
+                // Swal.showLoading();
                 console.log(response);
                 const Toast = Swal.mixin({
                     toast: true,
@@ -83,6 +86,9 @@
                     title: error.response.data.message
                 })
             });
+            // .finally(() => {
+            //     Swal.close();
+            // });
         }
     </script>
 @stop

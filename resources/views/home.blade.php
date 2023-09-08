@@ -13,7 +13,7 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Dashboard
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{ trans('home.title') }}
         {{-- <small class="text-muted fs-6 fw-bold ms-1 pt-1">You’ve got 24 New Sales</small> --}}
     </h1>
     <!--end::Heading-->
@@ -28,7 +28,7 @@
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <i class="fas fa-chart-pie" style="color: #fff ; font-size: 30px"></i>
                     </span>
-                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Categories</div>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">{{ trans('general.categories') }}</div>
                     <div class="fw-semibold text-white" style="font-size: 18px;">
                         {{ $categories_count }}</div>
                 </div>
@@ -40,7 +40,7 @@
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <i class="fas fa-chart-pie" style="color: #fff ; font-size: 30px"></i>
                     </span>
-                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Sub Categories</div>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">{{ trans('general.sub_categories') }}</div>
                     <div class="fw-semibold text-white" style="font-size: 18px;">
                         {{ $sub_categories_count }}</div>
                 </div>
@@ -52,7 +52,7 @@
                     <span class="svg-icon svg-icon-white svg-icon-3x ms-n1">
                         <i class="fas fa-book" style="color: #fff ; font-size: 30px"></i>
                     </span>
-                    <div class="text-white fw-bold fs-2 mb-2 mt-5">Books</div>
+                    <div class="text-white fw-bold fs-2 mb-2 mt-5">{{ trans('general.books') }}</div>
                     <div class="fw-semibold text-white" style="font-size: 18px;">
                         {{ $books_count }}</div>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="card-header pt-7">
                     <!--begin::Title-->
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder text-dark">Sub Category Statistics</span>
+                        <span class="card-label fw-bolder text-dark">{{ trans('home.sub_category_statistics') }}</span>
                         {{-- <span class="text-gray-400 pt-2 fw-bold fs-6">Top Selling Countries</span> --}}
                     </h3>
                     <!--end::Title-->

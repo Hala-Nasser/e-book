@@ -51,11 +51,11 @@ class SubCategoryController extends Controller
                            return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/'. $row->slug .'/edit">
                            <i class="fa fa-edit">
                            </i>
-                           Edit
+                           '.trans("general.edit").'
                        </a>
 
                        <button class="btn btn-danger btn-sm delete" onclick="DeleteSubCategory('. $row->id .',this)">
-                           Delete</button>';
+                       '.trans("general.delete").'</button>';
                    })
                    ->rawColumns(['action','category','status', 'subCategory'])
                    ->make(true);
@@ -110,9 +110,6 @@ class SubCategoryController extends Controller
                     </div>
                 </div>';
                    })
-                //    ->addColumn('sub-category', function ($row) {
-                //     return '<span class="fw-bolder text-dark">'. $row->subCategory->name .'</span>';
-                //    })
                    ->addColumn('price', function ($row) {
                     return '<span class="fw-bolder text-dark">'. $row->price .' $</span>';
                    })
@@ -120,11 +117,11 @@ class SubCategoryController extends Controller
                            return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/'. $row->slug .'/edit">
                            <i class="fa fa-edit">
                            </i>
-                           Edit
+                           '.trans("general.edit").'
                        </a>
 
                        <button class="btn btn-danger btn-sm delete" onclick="DeleteBook('. $row->id .',this)" style="margin-top:5px;">
-                           Delete</button>';
+                       '.trans("general.delete").'</button>';
                    })
 
                    ->rawColumns(['action', 'book', 'price'])

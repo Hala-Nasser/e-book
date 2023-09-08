@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable implements MustVerifyEmail
@@ -38,4 +39,24 @@ class Admin extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getIsVerifiedAttribute()
+    {
+        if ($this->email_verified_at) {
+            return '<div class="badge badge-light-success" style="font-size:1.15rem">Verified</div>';
+        } else {
+            return '<div class="badge badge-light-primary" style="font-size:1.15rem">Unverified</div>';
+        }
+    }
+
+    // public function getImageAttribute()
+    // {
+    //     if ($this->image) {
+    //         return '<span class="symbol-label"
+    //                         style="background-image:url('.Storage::url($this->image) .');"></span>';
+    //     } else {
+    //         return '<span class="symbol-label"
+    //         style="background-image:url('. asset('dist/assets/media/person.png') .');"></span>';
+    //     }
+    // }
 }

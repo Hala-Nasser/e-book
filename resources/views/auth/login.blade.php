@@ -11,20 +11,20 @@
             <!--begin::Heading-->
             <div class="text-center mb-10">
                 <!--begin::Title-->
-                <h1 class="text-dark mb-3">Sign In to E-book</h1>
+                <h1 class="text-dark mb-3">{{trans('login.title')}}</h1>
                 <!--end::Title-->
-                <!--begin::Link-->
+                {{-- <!--begin::Link-->
                 <div class="text-gray-400 fw-bold fs-4">New Here?
                     <a href="../../demo15/dist/authentication/layouts/basic/sign-up.html"
                         class="link-primary fw-bolder">Create an Account</a>
                 </div>
-                <!--end::Link-->
+                <!--end::Link--> --}}
             </div>
             <!--begin::Heading-->
             <!--begin::Input group-->
             <div class="fv-row mb-10">
                 <!--begin::Label-->
-                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                <label class="form-label fs-6 fw-bolder text-dark">{{trans('login.email')}}</label>
                 <!--end::Label-->
                 <!--begin::Input-->
                 <input class="form-control form-control-lg form-control-solid" type="text" name="email"
@@ -37,11 +37,11 @@
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-stack mb-2">
                     <!--begin::Label-->
-                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+                    <label class="form-label fw-bolder text-dark fs-6 mb-0">{{trans('login.password')}}</label>
                     <!--end::Label-->
                     <!--begin::Link-->
                     <a href="{{route('password.forget')}}"
-                        class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+                        class="link-primary fs-6 fw-bolder">{{trans('login.forgot_password')}}</a>
                     <!--end::Link-->
                 </div>
                 <!--end::Wrapper-->
@@ -51,7 +51,7 @@
                 <!--end::Input-->
             </div>
             <div class="fv-row mb-10">
-                <input type="checkbox" id="remember"> <label for="rememberMe">Remember me</label>
+                <input type="checkbox" id="remember"> <label for="rememberMe">{{trans('login.remeber_me')}}</label>
             </div>
             <!--end::Input group-->
             <!--begin::Actions-->

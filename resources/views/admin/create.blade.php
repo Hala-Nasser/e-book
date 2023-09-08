@@ -9,13 +9,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Admin</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('admin_create_edit.title')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-muted">Admins</li>
-        <li class="breadcrumb-item text-dark">Add Admin</li>
+        <li class="breadcrumb-item text-muted">{{trans('general.admins')}}</li>
+        <li class="breadcrumb-item text-dark">{{trans('admin_create_edit.title')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -36,7 +36,7 @@
                         <div class="card-header">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2>Thumbnail</h2>
+                                <h2>{{trans('admin_create_edit.thumbnail')}}</h2>
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -75,8 +75,7 @@
                             </div>
                             <!--end::Image input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the admin thumbnail image. Only *.png, *.jpg and *.jpeg image
-                                files are accepted</div>
+                            <div class="text-muted fs-7">{{trans('admin_create_edit.thumbnail_description')}}</div>
                             <!--end::Description-->
                         </div>
                         <!--end::Card body-->
@@ -96,7 +95,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>General</h2>
+                                            <h2>{{trans('admin_create_edit.general')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -105,40 +104,29 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Name</label>
+                                            <label class="required form-label">{{trans('admin_create_edit.name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="name" class="form-control mb-2"
-                                                placeholder="Admin name" value="" id="name" />
+                                                placeholder="{{trans('admin_create_edit.name')}}" value="" id="name" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Email</label>
+                                            <label class="required form-label">{{trans('admin_create_edit.email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="email" class="form-control mb-2"
-                                                placeholder="Admin Email" value="" id="email" />
+                                                placeholder="{{trans('admin_create_edit.email')}}" value="" id="email" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
-                                        {{-- <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="required form-label">Password</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control mb-2"
-                                                placeholder="Admin Password" value="" id="password" />
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group--> --}}
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Role</label>
+                                            <label class="required form-label">{{trans('admin_create_edit.role')}}</label>
                                             <!--end::Label-->
                                             <select class="form-select mb-2" data-control="select2"
                                                 data-placeholder="Select an option" id="role_id">
@@ -161,11 +149,11 @@
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
                         <a href="{{ route('admin.index') }}" id="kt_ecommerce_add_product_cancel"
-                            class="btn btn-light me-5">Cancel</a>
+                            class="btn btn-light me-5">{{trans('general.cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-                            Save Changes
+                            {{trans('general.save')}}
                         </button>
                         <!--end::Button-->
                     </div>

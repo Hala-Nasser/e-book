@@ -11,9 +11,9 @@
     <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{$subCategory->name}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-muted">Categories</li>
+        <li class="breadcrumb-item text-muted">{{trans('general.sub_categories')}}</li>
         <li class="breadcrumb-item text-dark">{{$subCategory->name}}</li>
     </ul>
     <!--end::Heading-->
@@ -31,7 +31,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar" style="float: right">
                 <!--begin::Add customer-->
-                <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
+                <a href="{{ route('book.create') }}" class="btn btn-primary">{{trans('book_index.add_book')}}</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -48,11 +48,11 @@
                         <th class="w-10px pe-2">
                             #
                         </th>
-                        <th class="min-w-200px">Book</th>
-                        <th class="min-w-100px">Author name</th>
-                        <th class="min-w-100px">Publish date</th>
-                        <th class="min-w-100px">Price</th>
-                        <th class="min-w-70px">Actions</th>
+                        <th class="min-w-200px">{{trans('book_index.book')}}</th>
+                        <th class="min-w-100px">{{trans('book_index.author_name')}}</th>
+                        <th class="min-w-100px">{{trans('book_index.publish_date')}}</th>
+                        <th class="min-w-100px">{{trans('book_index.price')}}</th>
+                        <th class="min-w-70px">{{trans('general.actions')}}</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -73,9 +73,6 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    {{-- <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script> --}}
-    <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>

@@ -15,7 +15,12 @@
                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
 
                     <a rel="alternate" hreflang="{{ $localeCode }}"
-                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                        @if ($localeCode == LaravelLocalization::getCurrentLocale()) ?
+                        style="color: #181c32;"
+                        @else
+                        style="color: #858ba9c4;"
+                        @endif>
                         {{ strtoupper($localeCode) }}
                     </a>
                     @endforeach

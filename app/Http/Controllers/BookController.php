@@ -54,11 +54,11 @@ class BookController extends Controller
                     return '<a class="btn btn-secondary btn-sm" href="/dashboard/book/' . $row->slug . '/edit">
                            <i class="fa fa-edit">
                            </i>
-                           Edit
+                           '.trans("general.edit").'
                        </a>
 
                        <button class="btn btn-danger btn-sm delete" onclick="DeleteBook(' . $row->id . ',this)" style="margin-top:5px;">
-                           Delete</button>';
+                       '.trans("general.delete").'</button>';
                 })
 
                 ->rawColumns(['action', 'book', 'sub-category', 'price'])

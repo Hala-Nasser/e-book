@@ -65,7 +65,7 @@
                                         </svg>
                                     </span>
                                 </span>
-                                <span class="menu-title">Home</span>
+                                <span class="menu-title">{{ trans('general.home')}}</span>
                             </a>
                         </div>
                     @endcan
@@ -86,7 +86,7 @@
                                         </svg>
                                     </span>
                                 </span>
-                                <span class="menu-title">Categories</span>
+                                <span class="menu-title">{{ trans('general.categories')}}</span>
                             </a>
                         </div>
                     @endcan
@@ -107,7 +107,7 @@
                                         </svg>
                                     </span>
                                 </span>
-                                <span class="menu-title">Sub Categories</span>
+                                <span class="menu-title">{{ trans('general.sub_categories')}}</span>
                             </a>
                         </div>
                     @endcan
@@ -129,7 +129,7 @@
                                     </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">Books</span>
+                                <span class="menu-title">{{ trans('general.books')}}</span>
                             </a>
                         </div>
                     @endcan
@@ -151,7 +151,7 @@
                                     </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">Admins</span>
+                                <span class="menu-title">{{ trans('general.admins')}}</span>
                             </a>
                         </div>
                     @endcan
@@ -173,7 +173,7 @@
                                     </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">Roles & Permissions</span>
+                                <span class="menu-title">{{ trans('dashboard_layout.roles_permissions')}}</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion">
@@ -185,7 +185,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Roles</span>
+                                            <span class="menu-title">{{ trans('general.roles')}}</span>
                                         </a>
                                     </div>
                                 @endcan
@@ -197,7 +197,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Permissions</span>
+                                            <span class="menu-title">{{ trans('general.permissions')}}</span>
                                         </a>
                                     </div>
                                 @endcan
@@ -237,7 +237,7 @@
                 </span>
                 <!--end::Svg Icon-->
                 <!--begin::Major-->
-                <span class="d-flex flex-shrink-0 fw-bolder">Log Out</span>
+                <span class="d-flex flex-shrink-0 fw-bolder">{{ trans('dashboard_layout.logout')}}</span>
                 <!--end::Major-->
             </a>
             <!--end::Link-->
@@ -264,11 +264,11 @@
                     data-kt-menu="true">
                     <!--begin::Menu item-->
                     <div class="menu-item px-5">
-                        <a href="../../demo15/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                        <a href="../../demo15/dist/account/overview.html" class="menu-link px-5">{{ trans('dashboard_layout.profile')}}</a>
                     </div>
                     <!--begin::Menu item-->
                     <div class="menu-item px-5 my-1">
-                        <a href="{{ route('admin.change-password') }}" class="menu-link px-5">Change Password</a>
+                        <a href="{{ route('admin.change-password') }}" class="menu-link px-5">{{ trans('dashboard_layout.change_password')}}</a>
                     </div>
                     <!--end::Menu item-->
 
@@ -277,8 +277,7 @@
                     <!--end::Menu separator-->
                     <!--begin::Menu item-->
                     <div class="menu-item px-5">
-                        <a href="{{ route('admin.logout') }}" class="menu-link px-5">Log
-                            Out</a>
+                        <a href="{{ route('admin.logout') }}" class="menu-link px-5">{{ trans('dashboard_layout.logout')}}</a>
                     </div>
                     <!--end::Menu item-->
                 </div>

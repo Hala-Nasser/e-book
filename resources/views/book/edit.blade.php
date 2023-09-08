@@ -9,13 +9,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Edit Book</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('book_create_edit.edit_title')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-muted">Books</li>
-        <li class="breadcrumb-item text-dark">Edit Book</li>
+        <li class="breadcrumb-item text-muted">{{trans('general.books')}}</li>
+        <li class="breadcrumb-item text-dark">{{trans('book_create_edit.edit_title')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -36,7 +36,7 @@
                         <div class="card-header">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2>Thumbnail</h2>
+                                <h2>{{trans('book_create_edit.thumbnail')}}</h2>
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -74,8 +74,7 @@
                             </div>
                             <!--end::Image input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the book thumbnail image. Only *.png, *.jpg and *.jpeg image
-                                files are accepted</div>
+                            <div class="text-muted fs-7">{{trans('book_create_edit.thumbnail_description')}}</div>
                             <!--end::Description-->
                         </div>
                         <!--end::Card body-->
@@ -87,7 +86,7 @@
                         <div class="card-header">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2>Book Details</h2>
+                                <h2>{{trans('book_create_edit.book_details')}}</h2>
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -96,7 +95,7 @@
                         <div class="card-body pt-0">
                             <!--begin::Input group-->
                             <!--begin::Label-->
-                            <label class="required form-label">Categories</label>
+                            <label class="required form-label">{{trans('general.categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
@@ -110,34 +109,30 @@
                                 @endforeach
                             </select>
                             <!--end::Select2-->
-                            <!--begin::Description-->
-                            <div class="text-muted fs-7 mb-7">Add book to a category.</div>
-                            <!--end::Description-->
                             <!--end::Input group-->
-
                             <!--begin::Input group-->
                             <!--begin::Label-->
-                            <label class="required form-label">Sub Categories</label>
+                            <label class="required form-label">{{trans('general.sub_categories')}}</label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
                                 id="sub_category_id">
                             </select>
                             <!--begin::Description-->
-                            <div class="text-muted fs-7 mb-7">Add book to a sub category.</div>
+                            <div class="text-muted fs-7 mb-7">{{trans('book_create_edit.sub_category_description')}}</div>
                             <!--end::Description-->
                             <!--end::Input group-->
                         </div>
                         <!--end::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Label-->
-                            <label class="required form-label">Price</label>
+                            <label class="required form-label">{{trans('book_create_edit.price')}}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="number" name="price" min="0.1" step="0.1" class="form-control mb-2"
-                                placeholder="Book price" value="{{ $book->price }}" id="price" />
+                                placeholder="{{trans('book_create_edit.price')}}" value="{{ $book->price }}" id="price" />
                             <!--end::Input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the book price.</div>
+                            <div class="text-muted fs-7">{{trans('book_create_edit.price_description')}}</div>
                             <!--end::Description-->
                         </div>
                     </div>
@@ -156,7 +151,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>General</h2>
+                                            <h2>{{trans('book_create_edit.general')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -165,22 +160,22 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Book Name</label>
+                                            <label class="required form-label">{{trans('book_create_edit.book_name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="book_name" class="form-control mb-2"
-                                                placeholder="Book name" value="{{ $book->name }}" id="name" />
+                                                placeholder="{{trans('book_create_edit.book_name')}}" value="{{ $book->name }}" id="name" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Author Name</label>
+                                            <label class="required form-label">{{trans('book_create_edit.author_name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="author_name" class="form-control mb-2"
-                                                placeholder="Author name" value="{{ $book->author_name }}"
+                                                placeholder="{{trans('book_create_edit.author_name')}}" value="{{ $book->author_name }}"
                                                 id="author_name" />
                                             <!--end::Input-->
                                         </div>
@@ -188,7 +183,7 @@
                                         <!--begin::Input group-->
                                         <div style="margin-top: 2.5rem">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Description</label>
+                                            <label class="required form-label">{{trans('book_create_edit.description')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <div id="kt_ecommerce_add_product_description"
@@ -196,15 +191,14 @@
                                                 {{ $book->description }}</div>
                                             <!--end::Editor-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">Set a description to the product for better
-                                                visibility.</div>
+                                            <div class="text-muted fs-7">{{trans('book_create_edit.description_description')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div style="margin-top: 2.5rem">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Publish Date</label>
+                                            <label class="required form-label">{{trans('book_create_edit.publish_date')}}</label>
                                             <!--end::Label-->
                                             <div class="col-xl-9 fv-row">
                                                 <div class="position-relative d-flex align-items-center">
@@ -241,7 +235,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Media</h2>
+                                            <h2>{{trans('book_create_edit.media')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -258,10 +252,8 @@
                                                     <!--end::Icon-->
                                                     <!--begin::Info-->
                                                     <div class="ms-4">
-                                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop files here or
-                                                            click to upload.</h3>
-                                                        <span class="fs-7 fw-bold text-gray-400">Upload up to 5
-                                                            files</span>
+                                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">{{trans('book_create_edit.drop_media_here')}}</h3>
+                                                        <span class="fs-7 fw-bold text-gray-400">{{trans('book_create_edit.upload_files')}}</span>
                                                     </div>
                                                     <!--end::Info-->
                                                 </div>
@@ -270,7 +262,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Description-->
-                                        <div class="text-muted fs-7">Set the book media gallery.</div>
+                                        <div class="text-muted fs-7">{{trans('book_create_edit.media_description')}}</div>
                                         <!--end::Description-->
                                     </div>
                                     <!--end::Card header-->
@@ -284,11 +276,11 @@
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
                         <a href="{{ route('book.index') }}" id="kt_ecommerce_add_product_cancel"
-                            class="btn btn-light me-5">Cancel</a>
+                            class="btn btn-light me-5">{{trans('general.cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-                            Save Changes
+                            {{trans('general.save_changes')}}
                         </button>
                         <!--end::Button-->
                     </div>
@@ -300,7 +292,7 @@
             <div class="card card-flush py-4">
                 <div class="card-body pt-0">
                     <!--begin::Label-->
-                    <label class="required form-label">Current Media</label>
+                    <label class="required form-label">{{trans('book_create_edit.current_media')}}</label>
                     <!--end::Label-->
                     <table>
                         @forelse ($book->media as $media)

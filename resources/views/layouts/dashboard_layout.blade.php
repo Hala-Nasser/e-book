@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+{{-- @if(LaravelLocalization::getCurrentLocale() == "ar")
+<html lang="ar" dir="rtl">
+@else --}}
+<html>
+{{-- @endif --}}
+
 <!--begin::Head-->
 
 <head>
@@ -16,7 +21,7 @@
     <link href="{{ asset('dist/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
 
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    {{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 

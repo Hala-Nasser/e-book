@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
@@ -17,16 +18,40 @@ class RoleController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct()
-     {
-         $this->authorizeResource(Role::class, 'role');
-     }
-
-    public function index()
+    public function __construct()
     {
-        $roles = Role::all();
-        $roles = Role::withCount('permissions')->get();
-        return response()->view('role.index', compact('roles'));
+        $this->authorizeResource(Role::class, 'role');
+    }
+
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Role::withCount('permissions')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user_type', function ($row) {
+                    return '<div class="badge ' . ($row->guard_name == 'admin' ? 'badge-light-success' : 'badge-light-primary') . '"
+                    style="font-size:1.15rem"> ' . $row->guard_name . '</div>';
+                })
+                ->addColumn('permissions',function($row){
+                    return '<a href="/dashboard/role/' . $row->id . '/permissions" id="kt_ecommerce_add_product_cancel"
+                            class="btn btn-light me-5">'. $row->permissions_count .' permission/s</a>';
+                })
+                ->addColumn('actions', function ($row) {
+                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/role/' . $row->id . '/edit">
+                           <i class="fa fa-edit">
+                           </i>
+                           '.trans("general.edit").'
+                       </a>
+
+                       <button class="btn btn-danger btn-sm delete" onclick="DeleteRole(' . $row->id . ',this)">
+                       '.trans("general.delete").'</button>';
+                })
+                ->rawColumns(['user_type', 'permissions', 'actions'])
+                ->make(true);
+        }
+
+        return view('role.index');
     }
 
     /**
@@ -60,8 +85,9 @@ class RoleController extends Controller
     public function editRolePermissions(Request $request, Role $role)
     {
 
-        // $this->authorize('editRolePermissions', Role::class);
-        $permissions = Permission::where('guard_name', $role->guard_name)->get();
+        if ($request->ajax()) {
+            // $this->authorize('editRolePermissions', Role::class);
+        $data = Permission::where('guard_name', $role->guard_name)->get();
         $role_permissions = $role->permissions;
 
         //في حال كانت الرول المحددة لها بيرميشنز
@@ -70,7 +96,7 @@ class RoleController extends Controller
         //ازا موجود ضيفلي اتربيوت الاسايند و خلي قيمته ترو
         //ازا موجود ضيفلي اتربيوت الاسياند و خلي قيمته فولس
         if (count($role_permissions) > 0) {
-            foreach ($permissions as $permission) {
+            foreach ($data as $permission) {
                 if ($role_permissions->contains($permission)) {
                     $permission->assigned = true;
                 } else {
@@ -78,7 +104,30 @@ class RoleController extends Controller
                 }
             }
         }
-        return response()->view('role.role_permissions', compact('role', 'permissions'));
+        // dd($data);
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user_type', function ($row) {
+                    return '<div class="badge ' . ($row->guard_name == 'admin' ? 'badge-light-success' : 'badge-light-primary') . '"
+                    style="font-size:1.15rem"> ' . $row->guard_name . '</div>';
+                })
+                ->addColumn('permissions',function($row){
+                    return '<a href="/dashboard/role/' . $row->id . '/permissions" id="kt_ecommerce_add_product_cancel"
+                            class="btn btn-light me-5">'. $row->permissions_count .' permission/s</a>';
+                })
+                ->addColumn('actions', function ($row) {
+                    // dd($row->assigned);
+                       return '<div class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input onclick="performUpdate('.$row->id.')"  ' . ($row->assigned == true ? 'checked="true"' : '') . ' class="form-check-input" type="checkbox" value="1" id="permission_'.$row->id.'_check_box">
+                                    </div>';
+                })
+                ->rawColumns(['user_type', 'permissions', 'actions'])
+                ->make(true);
+        }
+
+        return view('role.role_permissions', compact('role'));
+        // return response()->view('role.role_permissions', compact('role', 'permissions'));
     }
 
     public function updateRolePermissions(RolePermissionsRequest $request, Role $role)

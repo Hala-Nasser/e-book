@@ -8,12 +8,12 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Books</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('general.books')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-dark">Books</li>
+        <li class="breadcrumb-item text-dark">{{trans('general.books')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -30,7 +30,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Add customer-->
-                <a href="{{ route('book.create') }}" class="btn btn-primary">Add Book</a>
+                <a href="{{ route('book.create') }}" class="btn btn-primary">{{trans('book_index.add_book')}}</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -45,12 +45,12 @@
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="w-10px pe-2">#</th>
-                        <th class="min-w-200px">Book</th>
-                        <th class="min-w-100px">Author name</th>
-                        <th class="min-w-70px">Sub Category</th>
-                        <th class="min-w-100px">Publish date</th>
-                        <th class="min-w-20px">Price</th>
-                        <th class="min-w-70px">Actions</th>
+                        <th class="min-w-200px">{{trans('book_index.book')}}</th>
+                        <th class="min-w-100px">{{trans('book_index.author_name')}}</th>
+                        <th class="min-w-70px">{{trans('book_index.sub_category')}}</th>
+                        <th class="min-w-100px">{{trans('book_index.publish_date')}}</th>
+                        <th class="min-w-20px">{{trans('book_index.price')}}</th>
+                        <th class="min-w-70px">{{trans('general.actions')}}</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>

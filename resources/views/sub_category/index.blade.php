@@ -8,12 +8,12 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Sub Categories</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('general.sub_categories')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-dark">Sub Categories</li>
+        <li class="breadcrumb-item text-dark">{{trans('general.sub_categories')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -31,7 +31,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar" style="float: right">
                 <!--begin::Add customer-->
-                <a href="{{ route('sub-category.create') }}" class="btn btn-primary">Add Sub Category</a>
+                <a href="{{ route('sub-category.create') }}" class="btn btn-primary">{{trans('sub_category_index.add_sub_category')}}</a>
                 <!--end::Add customer-->
             </div>
             <!--end::Card toolbar-->
@@ -46,10 +46,10 @@
                     <!--begin::Table row-->
                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="min-w-10px">#</th>
-                        <th class="min-w-200px">Sub Category</th>
-                        <th class="min-w-150px">Category</th>
-                        <th class="min-w-150px">Status</th>
-                        <th class="min-w-70px">Actions</th>
+                        <th class="min-w-200px">{{trans('sub_category_index.sub_category')}}</th>
+                        <th class="min-w-150px">{{trans('sub_category_index.category')}}</th>
+                        <th class="min-w-150px">{{trans('sub_category_index.status')}}</th>
+                        <th class="min-w-70px">{{trans('general.actions')}}</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -68,9 +68,6 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    {{-- <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script> --}}
-    <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/categories.js') }}"></script>
     <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
@@ -92,11 +89,14 @@
                         },
                         {
                             data: 'subCategory',
-                            name: 'subCategory'
+                            name: 'subCategory',
+                            orderable: false,
                         },
                         {
                             data: 'category',
-                            name: 'category'
+                            name: 'category',
+                            orderable: false,
+                            searchable: true
                         },
                         {
                             data: 'status',
@@ -106,7 +106,6 @@
                             data: 'action',
                             name: 'action',
                             orderable: false,
-                            searchable: true
                         },
                     ]
                 });

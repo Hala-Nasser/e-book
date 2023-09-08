@@ -10,13 +10,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Edit Sub Category</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('sub_category_create_edit.edit_title')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-muted">Sub Categories</li>
-        <li class="breadcrumb-item text-dark">Edit Sub Category</li>
+        <li class="breadcrumb-item text-muted">{{trans('general.sub_categories')}}</li>
+        <li class="breadcrumb-item text-dark">{{trans('sub_category_create_edit.edit_title')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -36,7 +36,7 @@
                         <div class="card-header">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2>Thumbnail</h2>
+                                <h2>{{trans('sub_category_create_edit.thumbnail')}}</h2>
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -76,8 +76,7 @@
                             </div>
                             <!--end::Image input-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7">Set the sub category thumbnail image. Only *.png, *.jpg and *.jpeg
-                                image files are accepted</div>
+                            <div class="text-muted fs-7">{{trans('sub_category_create_edit.thumbnail_description')}}</div>
                             <!--end::Description-->
                         </div>
                         <!--end::Card body-->
@@ -92,7 +91,7 @@
                         <!--begin::Card header-->
                         <div class="card-header">
                             <div class="card-title">
-                                <h2>General</h2>
+                                <h2>{{trans('sub_category_create_edit.general')}}</h2>
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -101,14 +100,14 @@
                             <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">Sub Category Name</label>
+                                <label class="required form-label">{{trans('sub_category_create_edit.sub_category_name')}}</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" name="category_name" class="form-control mb-2"
-                                    placeholder="Category name" value="{{$subCategory->name}}" id="name" />
+                                    placeholder="{{trans('sub_category_create_edit.sub_category_name')}}" value="{{$subCategory->name}}" id="name" />
                                 <!--end::Input-->
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">A sub category name is required and recommended to be unique.</div>
+                                <div class="text-muted fs-7">{{trans('sub_category_create_edit.sub_category_name_description')}}</div>
                                 <!--end::Description-->
                             </div>
                             <!--end::Input group-->
@@ -116,7 +115,7 @@
                         <div class="mb-10 fv-row">
                             <!--begin::Input group-->
                             <!--begin::Label-->
-                            <label class="required form-label">Categories</label>
+                            <label class="required form-label">{{trans('general.categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
@@ -131,7 +130,7 @@
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
-                            <div class="text-muted fs-7 mb-7">Add book to a category.</div>
+                            <div class="text-muted fs-7 mb-7">{{trans('sub_category_create_edit.category_description')}}</div>
                             <!--end::Description-->
                             <!--end::Input group-->
                         </div>
@@ -139,7 +138,7 @@
                             <!--begin::Input group-->
                             <div>
                                 <!--begin::Label-->
-                                <label class="required form-label">Status</label>
+                                <label class="required form-label">{{trans('sub_category_create_edit.status')}}</label>
                                 <!--end::Label-->
                                 <label class="switch" style="margin-left: 10px">
                                     <input type="checkbox" id="status" @checked($subCategory->status )>
@@ -154,11 +153,11 @@
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
                         <a href="{{ route('sub-category.index') }}" id="kt_ecommerce_add_product_cancel"
-                            class="btn btn-light me-5">Cancel</a>
+                            class="btn btn-light me-5">{{trans('general.cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-                            Save Changes
+                            {{trans('general.save_changes')}}
                         </button>
                         <!--end::Button-->
                     </div>

@@ -9,13 +9,13 @@
 
 @section('heading_title')
     <!--begin::Heading-->
-    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Role</h1>
+    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">{{trans('roles_permissions.add_role')}}</h1>
     <ul class="breadcrumb breadcrumb-dot fw-bold fs-base my-1">
         <li class="breadcrumb-item text-muted">
-            <a href="{{ route('home') }}" class="text-muted">Home</a>
+            <a href="{{ route('home') }}" class="text-muted">{{trans('general.home')}}</a>
         </li>
-        <li class="breadcrumb-item text-muted">Roles</li>
-        <li class="breadcrumb-item text-dark">Add Role</li>
+        <li class="breadcrumb-item text-muted">{{trans('general.roles')}}</li>
+        <li class="breadcrumb-item text-dark">{{trans('roles_permissions.add_role')}}</li>
     </ul>
     <!--end::Heading-->
 @stop
@@ -40,7 +40,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>General</h2>
+                                            <h2>{{trans('roles_permissions.general')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -49,22 +49,22 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">User Type</label>
+                                            <label class="required form-label">{{trans('roles_permissions.user_type')}}</label>
                                             <!--end::Label-->
                                             <select id="guard" class="form-select mb-2">
-                                                <option value="admin">Admin</option>
-                                                <option value="user">User</option>
+                                                <option value="admin">{{trans('general.admin')}}</option>
+                                                <option value="user">{{trans('general.user')}}</option>
                                             </select>
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">Name</label>
+                                            <label class="required form-label">{{trans('roles_permissions.role_name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="name" class="form-control mb-2"
-                                                placeholder="Role name" value="" id="name" />
+                                                placeholder="{{trans('roles_permissions.role_name')}}" value="" id="name" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -81,11 +81,11 @@
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
                         <a href="{{ route('role.index') }}" id="kt_ecommerce_add_product_cancel"
-                            class="btn btn-light me-5">Cancel</a>
+                            class="btn btn-light me-5">{{trans('general.cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-                            Save Changes
+                            {{trans('general.save')}}
                         </button>
                         <!--end::Button-->
                     </div>

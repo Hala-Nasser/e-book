@@ -48,11 +48,11 @@ class CategoryController extends Controller
                     return '<a class="btn btn-secondary btn-sm" href="/dashboard/category/' . $row->slug . '/edit">
                            <i class="fa fa-edit">
                            </i>
-                           Edit
+                           '.trans("general.edit").'
                        </a>
 
                        <button class="btn btn-danger btn-sm delete" onclick="DeleteCategory(' . $row->id . ',this)">
-                           Delete</button>';
+                       '.trans("general.delete").'</button>';
                 })
                 ->rawColumns(['action', 'category', 'status'])
                 ->make(true);
@@ -111,11 +111,11 @@ class CategoryController extends Controller
                     return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/' . $row->id . '/edit">
                        <i class="fa fa-edit">
                        </i>
-                       Edit
+                       '.trans("general.edit").'
                    </a>
 
                    <button class="btn btn-danger btn-sm delete" onclick="DeleteSubCategory(' . $row->id . ',this)">
-                       Delete</button>';
+                   '.trans("general.delete").'</button>';
                 })
                 ->rawColumns(['action', 'sub-category', 'status'])
                 ->make(true);

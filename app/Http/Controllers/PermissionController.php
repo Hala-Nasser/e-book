@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
 {
@@ -15,10 +16,21 @@ class PermissionController extends Controller
          $this->authorizeResource(Permission::class, 'permission');
      }
 
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = Permission::all();
-        return response()->view('permission.index', compact('permissions'));
+        if ($request->ajax()) {
+            $data = Permission::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user_type', function ($row) {
+                    return '<div class="badge '. ($row->guard_name == 'admin' ? 'badge-light-success' : 'badge-light-primary' ).'"
+                    style="font-size:1.15rem"> '. $row->guard_name .'</div>';
+                })
+                ->rawColumns(['user_type'])
+                ->make(true);
+        }
+
+        return view('permission.index');
     }
 
     /**
