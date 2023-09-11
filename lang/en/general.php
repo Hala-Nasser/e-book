@@ -15,5 +15,7 @@ return[
     'search' => 'Search',
     'actions' => 'Actions',
     'admin' => 'Admin',
-    'user' => 'User'
+    'user' => 'User',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
 ];

@@ -73,13 +73,6 @@
 @stop
 
 @section('js')
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/products.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
-    <!--end::Page Custom Javascript-->
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -120,17 +113,17 @@
         });
     </script>
 
-    <script>
-        function DeleteCategory(id, element) {
+<script>
+    function DeleteBook(id, element) {
         Swal.fire({
-            title: 'Are you sure?'
-            , text: "This action will delete all books belongs to this sub category!"
-            , icon: 'warning'
-            , showCancelButton: true
-            , confirmButtonColor: '#3085d6'
-            , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Yes, Delete!'
-            , cancelButtonText: 'Cancel'
+            title: 'Are you sure?',
+            text: "You will not be able to undo the deletion!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete!',
+            cancelButtonText: 'Cancel'
         }).then((result) => {
 
             if (result.isConfirmed) {
@@ -142,28 +135,28 @@
     }
 
     function performDelete(id, element) {
-        axios.delete('/dashboard/sub-category/' + id)
+        axios.delete('/dashboard/book/' + id)
             .then(function(response) {
                 console.log(response);
                 Swal.fire({
-                    position: 'center'
-                    , icon: response.data.icon
-                    , title: response.data.message
-                    , showConfirmButton: false
-                    , timer: 1500
+                    position: 'center',
+                    icon: response.data.icon,
+                    title: response.data.message,
+                    showConfirmButton: false,
+                    timer: 1500
                 })
                 element.closest('tr').remove();
             })
             .catch(function(error) {
                 console.log(error);
                 Swal.fire({
-                    position: 'center'
-                    , icon: error.response.data.icon
-                    , title: error.response.data.message
-                    , showConfirmButton: false
-                    , timer: 1500
+                    position: 'center',
+                    icon: error.response.data.icon,
+                    title: error.response.data.message,
+                    showConfirmButton: false,
+                    timer: 1500
                 })
             });
     }
-    </script>
+</script>
 @stop

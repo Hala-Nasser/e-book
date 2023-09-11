@@ -96,17 +96,6 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
-    <!--end::Page Custom Javascript-->
-
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>

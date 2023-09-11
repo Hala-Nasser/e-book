@@ -60,15 +60,6 @@
 @stop
 
 @section('js')
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
-    <!--end::Page Custom Javascript-->
 
     <script type="text/javascript">
         $(document).ready(function() {

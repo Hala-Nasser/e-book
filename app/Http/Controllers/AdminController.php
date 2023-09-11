@@ -96,6 +96,7 @@ class AdminController extends Controller
         $admin->name = $data['name'];
         $admin->email = $data['email'];
         $admin->image = $data['image'];
+        $admin->active = true;
         $admin->password = Hash::make($password);
         $is_saved = $admin->save();
         if ($is_saved) {

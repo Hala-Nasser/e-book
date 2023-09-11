@@ -83,9 +83,6 @@
 
 @stop
 @section('js')
-    <!--begin::Page Custom Javascript(used by this page)-->
-    {{-- <script src="{{ asset('dist/assets/js/custom/authentication/sign-in/general.js') }}"></script> --}}
-    <!--end::Page Custom Javascript-->
 
     <script>
         function performLogin() {

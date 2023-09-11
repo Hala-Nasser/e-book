@@ -31,11 +31,9 @@ class SubCategory extends Model
     public function getIsActiveAttribute()
     {
         if ($this->status) {
-            // return "Active";
-            return '<div class="badge badge-light-success" style="font-size:1.15rem">Active</div>';
+            return '<div class="badge badge-light-success" style="font-size:1.15rem">'.trans("general.active").'</div>';
         } else {
-            // return "Inactive";
-            return '<div class="badge badge-light-primary" style="font-size:1.15rem">Inactive</div>';
+            return '<div class="badge badge-light-primary" style="font-size:1.15rem">'.trans("general.inactive").'</div>';
         }
     }
 

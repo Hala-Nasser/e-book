@@ -171,25 +171,12 @@
     <script>
         var hostUrl = "assets/";
     </script>
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{{ asset('dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    {{-- <script src="{{ asset('dist/assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script> --}}
-    <script src="{{ asset('dist/assets/js/widgets.bundle.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/widgets.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/apps/chat/chat.js') }}"></script>
-    <script src="{{ asset('dist/assets/js/custom/utilities/modals/users-search.js') }}"></script>
-    <!--end::Page Custom Javascript-->
-    <!--end::Javascript-->
 
     <script>
         function performStore() {
             let formData = new FormData();
             formData.append('name', document.getElementById('name').value);
             formData.append('email', document.getElementById('email').value);
-            // formData.append('password', document.getElementById('password').value);
             formData.append('role_id', document.getElementById('role_id').value);
 
 

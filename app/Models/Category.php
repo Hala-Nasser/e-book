@@ -28,19 +28,9 @@ class Category extends Model
     public function getIsActiveAttribute()
     {
         if ($this->status) {
-            // return "Active";
-            if(LaravelLocalization::getCurrentLocale() == "ar"){
-                return '<div class="badge badge-light-success" style="font-size:1.15rem">فعال</div>';
-            }else{
-                return '<div class="badge badge-light-success" style="font-size:1.15rem">Active</div>';
-            }
+                return '<div class="badge badge-light-success" style="font-size:1.15rem">'.trans("general.active").'</div>';
         } else {
-            // return "Inactive";
-            if(LaravelLocalization::getCurrentLocale() == "ar"){
-                return '<div class="badge badge-light-primary" style="font-size:1.15rem">غير فعال</div>';
-            }else{
-                return '<div class="badge badge-light-primary" style="font-size:1.15rem">Inactive</div>';
-            }
+                return '<div class="badge badge-light-primary" style="font-size:1.15rem">'.trans("general.inactive").'</div>';
         }
     }
 

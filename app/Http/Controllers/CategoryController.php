@@ -107,16 +107,16 @@ class CategoryController extends Controller
                 ->addColumn('status', function ($row) {
                     return $row->getIsActiveAttribute();
                 })
-                ->addColumn('action', function ($row) {
-                    return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/' . $row->id . '/edit">
-                       <i class="fa fa-edit">
-                       </i>
-                       '.trans("general.edit").'
-                   </a>
+                ->addColumn('action', function($row){
+                           return '<a class="btn btn-secondary btn-sm" href="/dashboard/sub-category/'. $row->slug .'/edit">
+                           <i class="fa fa-edit">
+                           </i>
+                           '.trans("general.edit").'
+                       </a>
 
-                   <button class="btn btn-danger btn-sm delete" onclick="DeleteSubCategory(' . $row->id . ',this)">
-                   '.trans("general.delete").'</button>';
-                })
+                       <button class="btn btn-danger btn-sm delete" onclick="DeleteSubCategory('. $row->id .',this)">
+                       '.trans("general.delete").'</button>';
+                   })
                 ->rawColumns(['action', 'sub-category', 'status'])
                 ->make(true);
         }
